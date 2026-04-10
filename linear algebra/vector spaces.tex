@@ -1,0 +1,307 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\title{Vector Spaces}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Vector Spaces}
+%Vector Spaces
+\begin{definition}[Vector Space]
+A (real) vector space is a set $V$ together with
+\begin{enumerate}
+    \item an operation call vector addition $\vec{x},\vec{y}\in V,\quad \vec{x}+\vec{y}\in V$
+    \item an operation call multiplication by a scalar $\vec{x}\in V,c\in \mathbb{R}, \quad c\vec{y}\in V$
+\end{enumerate}
+that satisfies:
+\begin{enumerate}
+    \item (Associativity) For all $\vec{x},\vec{y}, \vec{z}\in V$, $(\vec{x}+\vec{y})+ \vec{z} = \vec{x}+(\vec{y}+ \vec{z})$
+    \item (Commutativity) For all $\vec{x},\vec{y}\in V,\vec{x}+\vec{y}=\vec{y}+\vec{x}$
+    \item (Additive Identity) There exists a vector $\vec{0}\in V$ with the property that $\vec{x} + \vec{0}= \vec{x}$ for all $\vec{x}$.
+    \item (Additive Inverse) For each $\vec{x}\in V$, there exists $-\vec{x}\in V$ satisfies $\vec{x}+(-\vec{x})=\vec{0}$.
+    \item (Distributivity) For all $\vec{x},\vec{y}\in V, c\in\mathbb{R}$, $c(\vec{x}+\vec{y})=c\vec{x}+c\vec{y}$.
+    \item For all $\vec{x}\in V, c,d\in\mathbb{R}$,$(c+d)\vec{x}=c\vec{x}+d\vec{x}$.
+    \item For all $\vec{x}\in V, c,d\in\mathbb{R}$,$(cd)\vec{x} =c(d\vec{x})$.
+    \item For all $\vec{x}\in V$, $1\vec{x}=\vec{x}$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+Let $V$ be a vector space. Then
+\begin{enumerate}
+    \item The zero vector is unique.
+    \item For all $\vec{x}\in V$, $0\vec{x}=\vec{0}$.
+    \item For each $\vec{x}\in V$, $-\vec{x}$ is unique.
+    \item For all $\vec{x}\in V$, $c\in\mathbb{R}$, $(-c)\vec{x}=-(c\vec{x})$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For 1, suppose there are two $\vec{0},\vec{0}^{'}$, then $\vec{0}=\vec{0}+\vec{0}^{'}=\vec{0}^{'}$
+
+For 2, 
+\[
+0\vec{x}=(0+0)\vec{x}=0\vec{x}+0\vec{x}
+\]
+Then $0\vec{x}=\vec{0}$
+\end{proof}
+
+For 4, 
+\[
+\vec{0}=0\vec{x}=(c+(-c))\vec{x}=c\vec{x}+(-c)\vec{x}
+\]
+Adding additive inverse $-c\vec{x}$ on both side, and we get the result.
+
+\section{Subspaces}
+%Subspaces
+\begin{definition}[Subspaces]
+Let $V$ be a vector space, and let $W \subseteq V$ be a non-empty subset. Then $W$ is a subspace of $V$ if $W$ is a vector space itself under the operation of $V$.
+\end{definition}
+
+\begin{proof}
+Axiom 1, 2, 5, 6, 7, 8 naturally inherited from the original vector space $V$.
+Because $W$ is a non-empty subset, so there exists $\vec{x}\in W$, thus $0\vec{x}=\vec{0}\in W$. Axiom 3 satisfies.
+For any $\vec{x}\in W$, $(-1)\vec{x}=-\vec{x}\in W$ such that $\vec{x}+(-\vec{x})=(1+(-1))\vec{x}=0\vec{x}=\vec{0}$. Axiom 4 satisfies.
+Therefore the subspace must also be a vector space.
+\end{proof}
+
+\begin{theorem}
+Let $V$ be a vector space, and $W$ a non-empty subset of $V$. Then $W$ is a subspace of $V$ if and only if $\vec{x},\vec{y}\in W, c\in\mathbb{R}$, we have $c\vec{x}+\vec{y}\in W$.
+\end{theorem}
+
+\begin{remark}
+The expression $c\vec{x}+\vec{y}$ simplifies to addition when $c=1$
+\end{remark}
+
+\begin{remark}
+The expression simplifies to scalar multiplication when $\vec{y}=\vec{0}$
+\end{remark}
+
+\begin{theorem}
+Let $V$ be a vector space. Then the intersection of any collection of subspaces of $V$ is a subspace of $V$.
+\end{theorem}
+
+\begin{proof}
+$\vec{0}\in W_1, \vec{0}\in W_2 \implies\vec{0}\in W_1\cap W_2$.
+
+$\vec{x},\vec{y}\in W_1\cap W_2 \implies \vec{x},\vec{y}\in W_1,\vec{x},\vec{y}\in W_2\implies\vec{x}+\vec{y}\in W_1, \vec{x}+\vec{y}\in W_2 \implies\vec{x}+\vec{y}\in W_1\cap W_2$.
+
+$\vec{x}\in W_1\cap W_2 \implies \vec{x}\in W_1,\vec{x}\in W_2\implies c\vec{x}\in W_1,c\vec{x}\in W_2\implies c\vec{x}\in W_1\cap W_2$.
+\end{proof}
+
+\begin{remark}
+$W_1\cup W_2$ may not be a subspace.
+\end{remark}
+
+%Linear Combination
+\section{Linear Combination}
+\begin{definition}[Linear Combination]
+    Let $V$ be a vector space, and $\vec{x_1},\vec{x_2},\dots,\vec{x_n}\in V$. A linear combination is 
+    \[
+    a_1\vec{x_1}+a_2\vec{x_2}+\dots +a_n\vec{x_n}\in V
+    \]
+    for some $a_1,a_2,\dots,a_n\in \mathbb{R}$.
+\end{definition}
+
+\begin{definition}[Linear Combination (New)]
+    Let $S$ be a subset of vector space $V$, then
+    \begin{enumerate}
+        \item A linear combination of vector in $S$ is 
+        \[
+        a_1\vec{x_1}+a_2\vec{x_2}+\dots +a_n\vec{x_n}\in V
+        \]
+        for some $\vec{x_1},\vec{x_2},\dots,\vec{x_n}\in S,a_1,a_2,\dots,a_n\in \mathbb{R}$.
+        \item Span(S) is the set of all linear combinations of vector in $S$
+        \[
+        \text{Span}(S):=\{a_1\vec{x_1}+a_2\vec{x_2}+\dots +a_n\vec{x_n}:\vec{x_1},\vec{x_2},\dots,\vec{x_n}\in S,a_1,a_2,\dots,a_n\in \mathbb{R}\}
+        \]
+        \item If $W=\text{Span}(S)$, then we say $S$ spans $W$, or $S$ is a spanning set.
+    \end{enumerate}
+\end{definition}
+
+By convention, we let $\text{Span}(\emptyset)=\{\vec{0}\}$.
+
+\begin{theorem}
+Let $V$ be a vector space, and $S\subseteq V$ be a subset of $V$. Then $\text{Span}(S)$ is a subspace of $V$.
+\end{theorem}
+
+\begin{proof}
+    If there exists $\vec{s}\in S$, $0\vec{s}=\vec{0}\in S$.
+    If $S$ is empty, by convention, $\vec{0}\in \text{Span}(S)$.
+    (skip the part of closed under vector addition)
+    For $c\in\mathbb{R},\vec{y}\in \text{Span}(S)$, then $\vec{y}$ could be expressed as $\vec{y}=a_1\vec{x_1}+a_2\vec{x_2}+\dots +a_n\vec{x_n}$, then $c\vec{y}=(ca_1)\vec{x_1}+(ca_2)\vec{x_2}+\dots +(ca_n)\vec{x_n}\in \text{Span}(S)$, so it is closed under scalar multiplication.
+\end{proof}
+
+\begin{definition}[Sum of Subspaces]
+    Let $W_1, W_2$ be two subspaces of $V$. The sum of $W_1$ and $W_2$ is
+    \[
+    W_1+W_2:=\{\vec{x_1}+\vec{x_2}:\vec{x_1}\in W_1,\vec{x_2}\in W_2\}
+    \]
+    Moreover, if $W_1\cap W_2=\{\emptyset\}$, we denote the sum as $W_1\oplus W_2$.
+\end{definition}
+
+\begin{theorem}
+    If $W_1,W_2$ are subspaces of $V$, then $W_1+W_2$ is also a subspace of $V$.
+\end{theorem}
+
+\begin{proposition}
+    Let $V=W_1\oplus W_2$, then we could express $\vec{v}=\vec{v_1}+\vec{v_2}$ with unique $\vec{v_1}\in W_1, \vec{v_2}\in W_2$.
+\end{proposition}
+
+\begin{proof}
+    Suppose there are two pairs of $\vec{v_1},\vec{v_1^{'}}\in W_1, \vec{v_2},\vec{v_2^{'}}\in W_2$ such that $\vec{v}=\vec{v_1}+\vec{v_2}=\vec{v_1^{'}}+\vec{v_2^{'}}$.
+    Then $\vec{v_1}-\vec{v_1^{'}}=\vec{v_2^{'}}-\vec{v_2}\in W_1\cap W_2=\{\vec{0}\}$, so $\vec{v_1}-\vec{v_1^{'}}=\vec{v_2^{'}}-\vec{v_2}=\{\vec{0}\}$. Therefore $\vec{v_1}=\vec{v_1^{'}}, \vec{v_2}=\vec{v_2^{'}}$.
+\end{proof}
+
+\begin{proposition}
+    Let $W_1=\text{Span}(S_1),W_2=\text{Span}(S_2)$, then $W_1+W_2=\text{Span}(S_1\cup S_2)$.
+\end{proposition}
+
+\section{Basis}
+
+\begin{definition}[Linear Independent]
+    Let $V$ be a vector space. 
+    A subset $S\subseteq V$ is linear dependent if there are $\vec{x_1},\vec{x_2},\dots,\vec{x_n}\in S,a_1,a_2,\dots,a_n\in \mathbb{R}$, where $a_1,a_2\dots,a_n$ are not all 0, satisfying $a_1\vec{x_1}+a_2\vec{x_2}+\dots +a_n\vec{x_n}=\vec{0}$.
+
+    We say $S$ is linear independent if it is not linear dependent. That is, if $a_1\vec{x_1}+a_2\vec{x_2}+\dots +a_n\vec{x_n}=\vec{0}$, then $a_1=a_2=\dots=a_n=0$.
+\end{definition}
+
+\begin{remark}
+    Suppose $\vec{0}\in S$, then $S$ is linearly dependent.
+\end{remark}
+
+\begin{proposition}
+    Let $V$ be a vector space, $S\subseteq V$ is a subset of $V$.
+    
+    \begin{itemize}
+        \item If $S$ is linearly dependent and $S\subseteq S^{'}$, then $S^{'}$ is linearly dependent.
+        \item If $S$ is linearly independent and $S^{'}\subseteq S$, then $S^{'}$ is linearly independent.
+    \end{itemize}
+\end{proposition}
+
+\begin{definition}[Basis]
+    A subset $S$ of vector space $V$ is a basis if $S$ spans $V$ and $S$ is linearly independent.
+\end{definition}
+
+\begin{theorem}
+    Let $S$ be a subset of vector space $V$. Then $S$ is a basis of $V$ if and only if for every vector $\vec{x}\in V$, it may be written as a linear combination of vectors in $S$ in a unique way.
+\end{theorem}
+
+\begin{lemma}
+    Let $S=\{\vec{x_1},\dots,\vec{x_n}\}$ be a linear independent set of a vector space $V$, and $\vec{y}\in V$, then $S\cup\{\vec{y}\}$ is linearly independent if and only if $\vec{y}\notin \text{Span}(S)$.
+\end{lemma}
+
+\begin{proof}
+    First, we will prove the forward direction.
+    Suppose $S\cup \{\vec{y}\}$ is linearly independent.
+    Assume $\vec{y}\in \text{Span}(S)$. We could express $\vec{y}$ as $\vec{y}=a_1\vec{x_1}+\dots+a_n\vec{x_n}$, so $a_1\vec{x_1}+\dots+a_n\vec{x_n}-\vec{y}=\vec{0}$. So $S\cup \{\vec{y}\}$ is linearly dependent. 
+    This is a contradiction.
+    So $\vec{y}\notin \text{Span}(S)$.
+
+    Then, we prove the backward direction.
+    Suppose $\vec{y}\notin \text{Span}(S)$.
+    Then 
+    \[
+    a_1\vec{x_1}+\dots+a_n\vec{x_n}+a_{n+1}\vec{y}=\vec{0}
+    \]
+    If $a_{n+1}\neq0$, then
+    \[
+    \vec{y}=-\frac{a_1}{a_{n+1}}\vec{x_1}-\dots -\frac{a_n}{a_{n+1}}\vec{x_n} \in \text{Span}(S)
+    \]
+    This is a contradiction. So $a_{n+1}=0$.
+    Because $\{\vec{x_1},\dots,\vec{x_n}\}$ is linearly independent, so with the remaining equation
+    \[
+    a_1\vec{x_1}+\dots+a_n\vec{x_n}=\vec{0}
+    \]
+    has the solution $a_1=\dots =a_{n}$. Combined with $a_{n+1}=0$, we know that $S\cup \{\vec{y}\}$ is linearly independent.
+\end{proof}
+
+\begin{theorem}
+    Let $S$ be a linear independent set of a vector space $V$, and $\text{Span}(S)\subseteq V$.
+    There exists a basis $S^{'}$ of $V$, such that $S\subseteq S^{'}$.
+\end{theorem}
+
+\begin{theorem}
+    Let $V$ be a vector space and $S=\{\vec{x_1},\dots,\vec{x_m}\}$ where $V=\text{Span}(S)$. Then every linear independent set have at most $m$ vectors.
+\end{theorem}
+
+\begin{corollary}
+    Let $V$ be a vector space and $S, T$ basis of $V$ with $m,n$ elements. Then $m=n$.
+\end{corollary}
+
+\begin{proof}
+    Let $S$ be a subset that spans $V$, and $T$ a linear independent subset of $V$. Then by the theorem, we know that $n\leq m$. Similarly, we have $m\leq n$. So overall, $m=n$.
+\end{proof}
+
+\section{Dimension}
+
+\begin{definition}[Dimension]
+    Let $V$ be a vector space, and  $\{\vec{x_1},\dots,\vec{x_m}\}$ a basis of $V$. Then the dimension of $V$ is defined as 
+    \[
+    \text{dim}(V)=m
+    \]
+
+    In this case, we say that $V$ is finite dimensional.
+
+    If $V=\{\vec{0}\}$, $\text{dim}(V)=0$.
+\end{definition}
+
+\begin{example}
+    $\mathcal{P}_2(\mathbb{R})$ is an infinite dimensional vector space.
+\end{example}
+
+\begin{corollary}
+    Let $V$ be a vector space and $W$ a subspace of $V$. Then
+    \[
+    \text{dim}(V)\geq\text{dim}(W)
+    \]
+    Furthermore, $ \text{dim}(V)=\text{dim}(W)$ if and only if $V=W$.
+\end{corollary}
+
+\begin{proof}
+    Let $S$ be a basis of $V$, $T$ be a basis of $W$. Then $V=\text{Span}(S)$ and $T$ is a linearly independent set, so $\text{dim}(V)\geq\text{dim}(W)$.
+
+    %equation holds when:
+    Assume $\text{dim}(V)=\text{dim}(W)$.
+    We can write $V=\text{Span}(S)$, $W=\text{Span}(T)$.
+    If $W\neq V$, then we could find $y\notin \text{Span}(T)$, then $T\cup \{\vec{y}\}$ is linearly independent. 
+    However, it has dimension $\text{dim}(W)+1$.
+    This contradict with $\text{dim}(V)=\text{dim}(W)$.
+    So $W=V$.
+\end{proof}
+
+\begin{theorem}
+    Suppose $W_1, W_2$ are subspaces of vector space $V$. Then
+    \[
+    \text{dim}(W_1+W_2)=\text{dim}(W_1)+\text{dim}(W_2)-\text{dim}(W_1\cap W_2)
+    \]
+\end{theorem}
+
+\begin{proof}
+    Let $S$ be a basis of $W_1\cap W_2$. 
+    Extend $S$ to a basis of $W_1$ with $S\cup T_1$.
+    Extend $S$ to a basis of $W_2$ with $S\cup T_2$.
+    (Claim) $S\cup T_1\cup T_2$ is a basis of $W_1+W_2$, then write $S=\{\vec{x_1}, \dots, \vec{x_m}\}$, $T_1=\{\vec{y_1}, \dots, \vec{y_k}\}$, and $T_2=\{\vec{z_1}, \dots, \vec{z_l}\}$. 
+    Then $\text{dim}(W_1+W_2)=m+k+l$, $\text{dim}(W_1)=m+k$, $\text{dim}(W_2)=m+l$, and $\text{dim}(W_1\cap W_2)=m$. So the equation holds.
+\end{proof}
+
+\end{document}

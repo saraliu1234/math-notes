@@ -1,0 +1,171 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Complex Vector Space}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Complex Number}
+
+\begin{definition}[Complex Numbers]
+    The set of complex number
+    \[
+    \mathbb{C}:=\{a+bi:a,b\in\mathbb{R}\}
+    \]
+    where $i^2=-1$.
+\end{definition}
+
+\begin{definition}
+    The absolute value of $z$ is 
+    \[
+    |z|=\sqrt{a^2+b^2}=\sqrt{z\cdot\bar{z}}=|\bar{z}|
+    \]
+    and $\theta$ is the argument. We could write
+    \[
+    z=|z|(\cos\theta+i\sin\theta)
+    \]
+\end{definition}
+
+\begin{theorem}[Moivie's Formula]
+    \[
+    z^n=|z|^n(\cos n\theta+i\sin n\theta)
+    \]
+\end{theorem}
+
+\section{Complex Polynomials}
+\begin{theorem}
+    Let $p(z)=a_n z^n+\cdots+a_1 z+a_0$. Then $p(z)$ has $n$ roots counted with multiplicities.
+\end{theorem}
+
+\begin{proposition}
+    Let $p(z)=a_n z^n+\cdots+a_1 z+a_0$, where $a_0,a_1,\dots,a_n\in\mathbb{R}$.
+    If $p(z)=0$, then $p(\bar{z})=0$.
+\end{proposition}
+
+\section{Complex Vector Space}
+\begin{definition}
+    A field is a set $F$ with two operation $(+,\cdot)$ satisfying that for $x,y,z\in F$
+    \begin{enumerate}
+        \item $x+y=y+x$
+        \item $(x+y)+z=x+(y+z)$
+        \item There exists $0\in F$, $0+x=x$
+        \item There exists $-x\in F$, $x+(-x)=0$
+        \item $x\cdot y=y\cdot x$
+        \item $(x\cdot y)\cdot z=x\cdot (y\cdot z)$
+        \item There exists $1\in F$, $x\cdot 1=x$
+        \item If $x\neq 0$, then there exists $x^{-1}\in F$, $x\cdot x^{-1}=1$
+        \item $(x+y)\cdot z=x\cdot z+y\cdot z$
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    A Hertian inner product on $V$ is $\langle,\rangle:V\times V\rightarrow \mathbb{C}$ satisfying for all $\vec{u},\vec{v},\vec{w}\in V$
+    \begin{enumerate}
+        \item $\langle a\vec{u}+b\vec{v},\vec{w}\rangle=a\langle\vec{u},\vec{w}\rangle+b\langle\vec{v},\vec{w}\rangle$
+        \item $\langle u,v\rangle=\overline{\langle v,u\rangle}$
+        \item $\langle \vec{v},\vec{v}\rangle\geq 0$
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    The second entry 
+    \[
+    \langle \vec{u},a\vec{v}\rangle =\overline{\langle a\vec{v},\vec{u}\rangle}=\bar{a}\overline{\langle\vec{v},\vec{u}\rangle}=\bar{a}\langle\vec{u},\vec{v}\rangle
+    \]
+\end{remark}
+
+\begin{definition}[Standard Hermition Product]
+\[
+\left\langle\begin{bmatrix}
+z_1 \\
+z_2 \\
+\vdots \\
+z_n
+\end{bmatrix},
+\begin{bmatrix}
+w_1 \\
+w_2 \\
+\vdots \\
+w_n
+\end{bmatrix}
+\right\rangle=z_1\bar{w_1}+z_2\bar{w_2}+\cdots+z_n\bar{w_n}
+\]
+    
+\end{definition}
+
+\section{Self-Adjoint}
+\begin{definition}
+    Let $A$ be an $n\times n$ matrix, the adjoint of $A$ is $A^*=(\overline{A})^T$.
+    $A$ is self-adjoint if $A=A^*$.
+\end{definition}
+
+\begin{definition}
+    Let $T:\mathbb{C}\rightarrow\mathbb{C}$ be a linear transformation.
+    Let $\alpha$ be an orthonormal basis of $\mathbb{C}$. 
+    The adjoint of linear transformation $T^*$ is described by the matrix
+    \[
+    [T^*]^{\alpha}_{\alpha}=(\overline{[T]^{\alpha}_{\alpha}})^T
+    \]
+\end{definition}
+
+\begin{theorem}
+    For all $\vec{z},\vec{w}\in\mathbb{C}^n$, $\langle T(\vec{z}),\vec{w}\rangle=\langle \vec{z},T^*(\vec{w})\rangle$
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{theorem}
+    Let $T:\mathbb{C}^n\rightarrow\mathbb{C}^n$ be a self-adjoint linear transformation. 
+    If $\lambda$ be an eigenvalue for $T$, then $\lambda\in\mathbb{R}$.
+\end{theorem}
+
+\begin{proof}
+    Let $\vec{v}$ be an eigenvalue satisfying $\langle\vec{v},\vec{v}\rangle=1$.
+    \[
+    \lambda=\lambda\langle\vec{v},\vec{v}\rangle=\langle\lambda\vec{v},\vec{v}\rangle=\langle T(\vec{v}),\vec{v}\rangle=\langle\vec{v},T(\vec{v})\rangle=\langle\vec{v},\lambda\vec{v}\rangle=\bar{\lambda}\langle\vec{v},\vec{v}\rangle=\bar{\lambda}
+    \]
+\end{proof}
+
+\begin{proposition}
+    If $\vec{u},\vec{v}$ are eigenvectors of self-adjoint linear transformation $T$ with eigenvalues $\mu\neq\lambda$, then $\langle\vec{u},\vec{v}\rangle=0$.
+\end{proposition}
+
+\begin{proof}
+    \[
+    \mu \langle\vec{u},\vec{v}\rangle=\langle\mu\vec{u},\vec{v}\rangle=\langle T(\vec{u}),\vec{v}\rangle=\langle\vec{u},T(\vec{v})\rangle=\langle\vec{u},\lambda \vec{v}\rangle=\lambda\langle\vec{u},\vec{v}\rangle
+    \]
+    \[
+    (\mu-\lambda)\langle\vec{u},\vec{v}\rangle=0
+    \]
+    \[
+    \langle\vec{u},\vec{v}\rangle=0
+    \]
+\end{proof}
+
+\begin{theorem}
+    Let $T:\mathbb{C}^n\rightarrow\mathbb{C}^n$ be a self-adjoint linear transformation. There exists an orthonormal basis consisting of eigenvectors if and only if it is diagonalizable.
+\end{theorem}
+
+\end{document}

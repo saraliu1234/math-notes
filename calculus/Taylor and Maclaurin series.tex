@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Taylor and Maclaurin series}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Taylor Polynomials}
+\begin{definition}
+    Let $a\in \mathbb{R}$. A power series centered at a is a function $f$ defined by an equation like 
+    \[
+    f(x)=\sum_{n=0}^{\infty}c_n(x-a)^n=c_0+c_1(x-a)+c_2(x-a)^2+\dots
+    \]
+    where $c_0,c_1,c_2,\dots\in\mathbb{R}$.
+\end{definition}
+
+\begin{theorem}
+    Let $f(x)=\sum_{n=0}^{\infty}c_n(x-a)^n$ be a power series centered at $a\in\mathbb{R}$.
+    \begin{enumerate}
+        \item The domain of $f$ is an interval centered at $a$:$(a-R,a+R)$,$(a-R,a+R]$,$[a-R,a+R)$,$[a-R,a+R]$,$\mathbb{R}$, and $\{a\}$. We call this the \textbf{interval of convergence (IC)} of $f$, and $R$ the radius of convergence.
+        \item In the interior of the IC, the series is absolutely convergent. In the exterior of the IC, the series is divergent. At the endpoints, anything may happen.
+        \item In the interior of the IC, power series can be manipulate by basic operations.
+    \end{enumerate}
+\end{theorem}
+
+\section{Taylor and Maclaurin series}
+\[
+\begin{aligned}
+    f(x)&=\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n\\
+    &=f(a)+\frac{f^{'}(a)}{1!}(x-a)+\frac{f^{''}(a)}{2!}(x-a)^2+\frac{f^{'''}(a)}{3!}(x-a)^3+\cdots
+\end{aligned}
+\]
+\[
+    f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}x^n=f(0)+\frac{f^{'}(0)}{1!}x+\frac{f^{''}(0)}{2!}x^2+\cdots
+\]
+
+\section{Four Examples}
+\[
+\begin{aligned}
+e^x&=\sum_{n=0}^{\infty}\frac{x^n}{n!}=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots\\
+\sin x&=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!}=x-\frac{x^3}{3!}+\frac{x^5}{5!}+\cdots\\
+\cos x&=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!}=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\frac{x^6}{6!}+\cdots\\
+\frac{1}{1-x}&=\sum_{n=0}^{\infty}x^n=1+x+x^2+x^3\cdots
+\end{aligned}
+\]
+
+\section{Remainder}
+
+\begin{theorem}[Taylor's Inequality]
+    If $|f^{(n+1)}(x)|\leq M$ for $|x-a|\leq d$, then the remainder $R_n(x)$ of the Taylor series satisfies the inequality
+    \[
+    |R_n(x)|\leq\frac{M}{(n+1)!}|x-a|^{n+1} \qquad \text{for }|x-a|\leq d
+    \]
+\end{theorem}
+
+\begin{theorem}
+    Let $f\in C^{n+1}$ is continuous on an interval containing $a$ and $x$, then
+    \[
+    f(x)=f(a)+\frac{f^{'}(a)}{1!}(x-a)+\frac{f^{''}(a)}{2!}(x-a)^2+\cdots + \frac{f^{(n)}(a)}{n!}(x-a)^n
+    +\frac{1}{n!}\int_{t=a}^xf^{(n+1)}(t)(x-t)^n dt
+    \]
+\end{theorem}
+
+
+\begin{theorem}[Lagrange's Remainder Theorem]
+    Let $f\in C^{n+1}$ in an interval containing $a$ and $x$.
+    Then
+    \[
+    f(x)-\left(\sum_{j=0}^n\frac{f^{(j)}(a)}{j!}(x-a)^j\right) = \frac{f^{(j)}(c)}{(n+1)!}(x-a)^{n+1}
+    \]
+    where $c$ is some number between $a$ and $x$.
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\end{document}

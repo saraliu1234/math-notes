@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[definition]
+
+\title{Lebesgue's dominated convergence theorem}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+Let $(f_n)$ be a sequence of complex measurable function on a measure space $(S, \Sigma, \mu)$. 
+Suppose the sequence converges to pointwise function $f$, that is 
+\[
+\lim_{n\rightarrow \infty}f_n(x)=f(x)
+\]
+exists for every $x\in S$.
+Assume that the sequence $f_n$ is dominated by some integrable function $g$, that is 
+\[
+|f_n(x)|\leq g(x)
+\]
+for all point $x \in S$ and all $n$ in index set. 
+Then $f_n,f$ are integrable, and
+\[
+\lim_{n \rightarrow \infty}\int_{S}f_n d\mu = \int_{S}\lim_{n \rightarrow \infty}f_n d\mu = \int_{S}f d\mu
+\]
+
+Furthermore, we could write
+\[
+\lim_{n \rightarrow \infty}\int_{S}|f_n-f| d\mu = 0
+\]
+
+\section{Fatou's lemma}
+\subsection{Integrable lower bound}
+Let $f_1,f_2,\dots$ be a sequence of extended real-value measurable function defined on a measure space $(S, \sigma, \mu)$. If there exists an integral function $g$ on $S$ such that $f_n>-g$ for all $n$, then
+\[
+\lim_{n \rightarrow \infty}\inf\int_{S}f_n d\mu \geq \int_{S}\lim_{n \rightarrow \infty}\inf f_n d\mu
+\]
+
+\end{document}

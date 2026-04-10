@@ -1,0 +1,414 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{property}[theorem]{Property}
+
+\title{Eigenvectors and Eigenvalues}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Eigenvectors and Eigenvalues}
+
+\begin{definition}
+    Let $T:V\rightarrow V$ a linear transformation.
+    A vector $\vec{x}\in V$ is an eigenvector of $T$ if $\vec{x}\neq\vec{0}$ and $T(\vec{x})=\lambda \vec{x}$ for some $\lambda\in \mathbb{R}$.
+
+    If $\vec{x}$ is an eigenvector with $T(\vec{x})=\lambda \vec{x}$, then $\lambda$ is called the eigenvalue corresponding to $\vec{x}$.
+\end{definition}
+
+\section{Diagonalization}
+
+\begin{theorem}
+    Let $T:V\rightarrow V$ be a linear transformation.
+    Let $\{\vec{x_1},\dots, \vec{x_k}\}$ be eigenvectors corresponding to distinct eigenvalues $\lambda_1, \dots,\lambda_k$.
+    Then $\{\vec{x_1},\dots, \vec{x_k}\}$ is linearly independent.
+\end{theorem}
+
+\begin{proof}[Proof by Induction]
+    $k=1$ is the trivial case.
+    Suppose the theorem is true for $k=n$, then for $k=n+1$, let $\{\vec{x_1},\dots, \vec{x_{n+1}}\}$ be eigenvectors corresponding to eigenvalue $\lambda_1, \dots,\lambda_{n+1}$.
+    \[
+    \begin{aligned}
+    a_1\vec{x_1}+\dots+a_{n+1}\vec{x_{n+1}}=\vec{0}\\
+    a_1T(\vec{x_1})+\dots+a_{n+1}T(\vec{x_{n+1}})=\vec{0}\\
+    a_1\lambda_1\vec{x_1}+\dots+a_{n+1}\lambda_{n+1}\vec{x_{n+1}}=\vec{0}\\
+    a_1\lambda_{n+1}\vec{x_1}+\dots+a_{n+1}\lambda_{n+1}\vec{x_{n+1}}=\vec{0}\\
+    a_1(\lambda_{n+1}-\lambda_1)\vec{x_1}+\dots+a_{n}(\lambda_{n+1}-\lambda_{n})\vec{x_{n}}=\vec{0}
+    \end{aligned}
+    \]
+    By assumption, we know that $a_1=a_2=\dots=a_n=0$, so $a_{n+1}=0$. 
+    Therefore, $\{\vec{x_1},\dots, \vec{x_k}\}$ is linearly independent.
+\end{proof}
+
+\begin{definition}
+    Let $V$ be a finite dimensional vector space.
+    Let $T:V\rightarrow V$ be a linear transformation.
+    $T$ is diagonalizable if $\alpha=\{\vec{x_1},\dots, \vec{x_n}\}$ is a basis for $V$ where $\vec{x_i}$ is eigenvectors of $T$.
+\end{definition}
+
+\begin{remark}
+    Suppose $T$ has $n$ distinct eigenvalues, then $n$ is diagonalizable.
+\end{remark}
+
+\begin{theorem}
+    Let $V$ be a finite dimensional vector space.
+    Let $T:V\rightarrow V$ be a linear transformation.
+    $T$ is diagonalizable if and only if for every basis $\alpha$ consisting of eigenvectors, $[T]_{\alpha}^{\alpha}$ is similar to a diagonal matrix.
+\end{theorem}
+
+\begin{proof}
+    First, prove the forward direction.
+    Assume $T$ is diagonalizable.
+    Let $\beta=\{\vec{x_1},\dots, \vec{x_n}\}$ be a basis consisting of eigenvectors with corresponding eigenvalues $\lambda_1,\dots,\lambda_n$
+    \[
+    [T]^{\beta}_{\beta}=
+    \begin{pmatrix}
+        \lambda_1 & & &\\
+        & \lambda_2 & &\\
+        & & \dots &\\
+        & & & \lambda_n
+    \end{pmatrix}
+    \]
+    By definition, $[T]_{\alpha}^{\alpha}$ is similar to a diagonal matrix.
+    
+    Then, prove the backward direction. 
+    Assume for every basis $\alpha$, $[T]_{\alpha}^{\alpha}$ is similar to a diagonal matrix $D$. That is 
+    \[
+    D = P^{-1}[T]_{\alpha}^{\alpha}P,\quad\alpha=\{\vec{v_1}, \dots, \vec{v_n}\}
+    \]
+    write $P$ as $(\vec{w_1}, \dots, \vec{w_n})$. Because $P$ is invertible, so $\{\vec{w_1}, \dots, \vec{w_n}\}$ is linearly independent. Then $[T]_{\alpha}^{\alpha} = PDP^{-1}$, so $T$ is diagonalizable.
+\end{proof}
+
+\begin{theorem}
+    Let $T:V\rightarrow V$ be a linear transformation.
+    Let $n$ be the dimension of $V$.
+    Let $\lambda_1, \ldots, \lambda_k$ be $k$ distinct eigenvalues of $T$. Then
+    \begin{enumerate}
+        \item $1\leq \dim(E_{\lambda_i})\leq m_i$
+        \item $T$ is diagonalizable if and only if
+        \begin{enumerate}
+            \item $\sum_{j=1}^{k}m_j=n$
+            \item $\dim(E_{\lambda_k})=m_k$
+        \end{enumerate}
+    \end{enumerate}
+    
+\end{theorem}
+
+\begin{proof}
+Let $\lambda_1, \ldots, \lambda_m$ be the distinct eigenvalues of $A$, and let the
+$\lambda_i$-eigenspace $E_{\lambda_i}$ have basis $\mathcal{B}_i$ for each
+$i \in \{1, \ldots, m\}$. Suppose first that $A$ is diagonalizable.
+Then, by the Diagonalization Theorem, we know that $A$ has
+$n$ linearly independent eigenvectors which we label so that
+\[
+\alpha_1=\{\vec{v}_{11}, \ldots, \vec{v}_{1k_1}\} \subseteq E_{\lambda_1}
+\]
+\[
+\alpha_2=\{\vec{v}_{21}, \ldots, \vec{v}_{2k_2}\} \subseteq E_{\lambda_2}
+\]
+\[
+\vdots
+\]
+\[
+\alpha_m=\{\vec{v}_{m1}, \ldots, \vec{v}_{mk_m}\} \subseteq E_{\lambda_m}.
+\]
+Denote $n_j$ as the number of element in $\alpha_j$, then
+\[
+n_j\leq \dim(E_{\lambda_i})\leq m_j
+\]
+Sum it over all $j$ and we get
+\[
+n=\sum_{k=1}^{j}n_k\leq\sum_{k=1}^{j}\dim(E_{\lambda_i})\leq\sum_{k=1}^{j}m_j\leq n
+\]
+So the all the inequality must be equal.
+\end{proof}
+
+\section{Inner product and orthogonality}
+\begin{definition}[Inner product]
+    The inner product of $\mathbb{R}^n$ is defined by 
+    \[
+    \left\langle\begin{pmatrix}
+a_1 \\
+\vdots \\
+a_n
+\end{pmatrix},\begin{pmatrix}
+b_1 \\
+\vdots \\
+b_n
+\end{pmatrix}\right\rangle=a_1b_1+\dots+a_nb_n
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{itemize}
+        \item For $\vec{x},\vec{y}\in\mathbb{R}^n$, $\langle\vec{x},\vec{y}\rangle= \langle\vec{y},\vec{x}\rangle$
+        \item For $\vec{x}\in\mathbb{R}^n$, $||x||^2=\langle\vec{x},\vec{x}\rangle$
+        and $\langle\vec{x},\vec{x}\rangle=0\iff \vec{x}=\vec{0}$
+        \item For $\vec{z}\in\mathbb{R}^2,c\in\mathbb{R}$, $\langle\vec{x}+\vec{z},\vec{y}\rangle=\langle\vec{x},\vec{y}\rangle+\langle\vec{z},\vec{y}\rangle$ and $\langle\vec{x},\vec{y}+\vec{z}\rangle=\langle\vec{x},\vec{y}\rangle+\langle\vec{x},\vec{z}\rangle$.
+        \item For $\vec{x},\vec{y}\in\mathbb{R}^2$, $\langle\vec{x},\vec{y}\rangle= ||x||^2||y||^2\cos \theta$
+    \end{itemize}
+\end{property}
+
+\begin{definition}
+    Vectors $\vec{x},\vec{y}$ are orthogonal if $\langle\vec{x},\vec{y}\rangle=0$
+\end{definition}
+
+\begin{proposition}
+    If $\vec{x},\vec{y}$ are orthogonal, then they are linearly independent.
+\end{proposition}
+
+\begin{proof}
+    Let $a\vec{x}+b\vec{y}=\vec{0}$, then $\langle a\vec{x}+b\vec{y},\vec{x}\rangle=0$.
+    By the property of inner product, we get $a\langle \vec{x},\vec{x}\rangle+ b\langle \vec{y},\vec{x}\rangle=0$, so $a\langle \vec{x},\vec{x}\rangle=0$, so $a=0$. Then $b=0$.
+\end{proof}
+
+\section{Orthogonality}
+
+\begin{definition}
+    Let $W\subseteq \mathbb{R}^n$ be a subspace, the the orthogonal complement
+    \[
+    W^{\perp}:=\{\vec{v}\in\mathbb{R}^n:\langle\vec{v},\vec{w}\rangle=0,\vec{w}\in W\}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Let $W\subseteq \mathbb{R}^n$ be a subspace, $\alpha=\{\vec{w_1},\dots,\vec{w_n}\}$ a basis of $W$.
+    \begin{enumerate}
+        \item $W^{\perp}=\{\vec{v}\in\mathbb{R}^n\langle\vec{v},\vec{w_j}\rangle=0,j=1,\dots,k\}$
+        \item $W^{\perp}=\text{Nul}(A^{T})$
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    Let $W\subseteq \mathbb{R}^n$ be a subspace.
+\begin{enumerate}
+    \item $W\cap W^{\perp}=\{\vec{0}\}$
+    \item $W^{\perp}$ is a subspace of $\mathbb{R}^n$
+    \item $\dim(W)+\dim(W^{\perp})=n$
+    \item $W\oplus W^{\perp}=\mathbb{R}^n$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[3]
+    Let $\{\vec{w_1},\dots,\vec{w_k}\}$ be a basis for $W$, then let $A=(\vec{w_1}\dots\vec{w_k})$.
+    Then we know that $\dim(W)$ is the linearly independent columns of $A$, which is $\text{rank}(A)$.
+    From the proposition, we know that $\dim(W^{\perp})$ is the free variables in $A^{T}$.
+    So we want to prove that $\text{rank}(A)=\text{rank}(A^T)$.
+\end{proof}
+
+\begin{proof}[4]
+    Let $\alpha=\{\vec{v_1},\dots,\vec{v_k}\}$ be a basis for $W$, and $\alpha=\{\vec{w_1},\dots,\vec{w_{n-k}}\}$ be a basis for $W^\perp$.
+    We only need to prove that $\{\vec{v_1},\dots,\vec{v_k}, \vec{w_1},\dots,\vec{w_{n-k}}\}$ is a basis for $\mathbb{R}^n$.
+    Let 
+    \[
+    a_1\vec{v_1}+\dots+a_k\vec{v_k}+b_1\vec{w_1}+\dots+b_{n-k}\vec{w_{n-k}}=\vec{0}
+    \]
+    \[
+    a_1\vec{v_1}+\dots+a_k\vec{v_k}=-b_1\vec{w_1}-\dots-b_{n-k}\vec{w_{n-k}}
+    \]
+    Then the left hand side is in $\text{Span}(W)$, and the right hand side is in $\text{Span}(W^{\perp})$.
+    So both side are equal to $\vec{0}$, so the whole set is linearly independent.
+\end{proof}
+
+\begin{definition}[Orthogonal Projection]
+    Let $W\subseteq \mathbb{R}^n$ be a subspace.
+For any vector $\vec{x}\in\mathbb{R}^n$, write it as a unique combination of $\vec{x}=\vec{x}_1+\vec{x}_2$, where $\vec{x}_1\in W$, and $\vec{x}_2\in W^{\perp}$.
+The orthogonal projection onto $W$ is $P_{W}(\vec{x})=\vec{x}_1$.
+\end{definition}
+
+\begin{remark}
+    $\vec{x}-P_W(\vec{x})\in W^{\perp}$
+\end{remark}
+
+\begin{proposition}
+Let $W\subseteq \mathbb{R}^n$ be a subspace.
+    \begin{enumerate}
+        \item $P_W$ is linear
+        \item $\lambda=0,1$ are eigenvalues of $P_W$
+        \item $\text{Ker}(P_W)=W^{\perp}=E_0$, $\text{Im}(P_W)=W=E_1$
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    The set $\{\vec{v_1},\dots,\vec{v_k}\}\subseteq\mathbb{R}^n$ is orthogonal if $\langle \vec{x_i},\vec{x_j}\rangle=0$ if and only if $i\neq j$.
+\end{definition}
+
+\begin{definition}
+    The set $\{\vec{v_1},\dots,\vec{v_k}\}\subseteq\mathbb{R}^n$ is orthonormal if it is orthogonal and $\langle \vec{x_i},\vec{x_i}\rangle=1$ for every $i$.
+\end{definition}
+
+\begin{theorem}
+    The set $\{\vec{v_1},\dots,\vec{v_k}\}\subseteq\mathbb{R}^n$ be an orthogonal basis, then
+    \begin{enumerate}
+        \item $\forall \vec{w}\in W, \vec{w}=\sum_{j=1}^k\frac{\langle \vec{w},\vec{w_j}\rangle}{\langle \vec{w_j},\vec{w_j}\rangle}\vec{w_j}$
+        \item $\forall \vec{w}\in \mathbb{R}^n, P_W(\vec{x})=\sum_{j=1}^k\frac{\langle \vec{x},\vec{w_j}\rangle}{\langle \vec{w_j},\vec{w_j}\rangle}\vec{w_j}$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We could write $\vec{w}=a_1\vec{w_1}+\dots+a_k\vec{w_k}$, then
+    \[
+    \begin{aligned}
+        \langle \vec{w},\vec{w_j}\rangle&=\langle a_1\vec{w_1}+\dots+a_k\vec{w_k},\vec{w_j}\rangle\\
+        &=a_1\langle \vec{w_1},\vec{w_j}
+    \rangle+\dots+a_k\langle\vec{w_k},\vec{w_j}
+    \rangle =a_j\langle \vec{w_j},\vec{w_j}
+    \rangle
+    \end{aligned}
+    \]
+    so $a_j=\frac{\langle \vec{w},\vec{w_j}
+    \rangle}{\langle \vec{w_j},\vec{w_j}
+    \rangle}$
+\end{proof}
+
+\begin{theorem}[Gram-Schmidt Process]
+    Let $W\subseteq \mathbb{R}^n$ be a subspace.
+    Then there exists an orthonormal basis of $W$.
+\end{theorem}
+
+\begin{proof}
+    Let $\alpha=\{\vec{v_1},\dots,\vec{v_k}\}$ be a basis for $W$.
+
+    Step 1: $\vec{v_1}=\vec{w_1}$, $\vec{u_1}=\frac{1}{||\vec{v_1}||}\vec{v_1}$.
+
+    Step m:
+    Let $W_m=\text{Span}\{\vec{w_1},\dots,\vec{w_m}\}$, $\vec{v_{m+1}}=\vec{w_{m+1}}-P_W(\vec{w_{m+1}})$, $\vec{u_m}=\frac{1}{||\vec{v_m}||}\vec{v_m}$.
+\end{proof}
+
+\section{Symmetric Matrices}
+
+\begin{definition}
+    $A$ is an $n\times m$ matrix with $ij-$entry $a_{ij}$.
+    $A^T$ is an $m\times n$ matrix with $ij-$entry $a_{ji}$.
+\end{definition}
+
+\begin{definition}
+    A $n\times n$ matrix $A$ is symmetric if $A^T=A$.
+\end{definition}
+
+\begin{theorem}
+    Let $A$ be $n\times n$ matrix and $\vec{x},\vec{y}\in\mathbb{R}^n$ be arbitrary vectors.
+    Then
+    \[
+    \langle A\vec{x},\vec{y}\rangle = \langle \vec{x},A^T\vec{y}\rangle
+    \]
+\end{theorem}
+
+\begin{proof}
+    \[
+    \langle A\vec{x},\vec{y}\rangle=(A\vec{x})^T\vec{y}=\vec{x}^TA^T\vec{y}= \langle \vec{x},A^T\vec{y}\rangle
+    \]
+\end{proof}
+
+\begin{corollary}
+    $A$ is symmetric $\iff$ $\langle A\vec{x},\vec{y}\rangle = \langle \vec{x},A\vec{y}\rangle$ for all $\vec{x},\vec{y}\in\mathbb{R}^n$.
+\end{corollary}
+
+\begin{theorem}
+    Let $S\subseteq\mathbb{R}^n$ be a subspace, and $\alpha$ an orthonormal basis of $W$.
+    Let $T:W\rightarrow W$ be a linear transformation.
+    Then for all $\vec{x},\vec{y}\in\mathbb{R}^n$,
+    \begin{enumerate}
+        \item $\langle \vec{x},\vec{y}\rangle=\langle [\vec{x}]_{\alpha},[\vec{y}]_{\alpha}\rangle$ for $\vec{x},\vec{y}\in\mathbb{R}^n$
+        \item $[T]^{\alpha}_{\alpha}$ is symmetric $\iff$ $\langle T(\vec{x}),\vec{y}\rangle = \langle \vec{x},T(\vec{y})\rangle$ for all $\vec{x},\vec{y}\in\mathbb{R}^n$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}[1]
+    Let $M=[I]_{\varepsilon}^{\alpha}$, so we know $M\vec{x}=[\vec{x}]_{\alpha}$.
+    \[
+    \langle [\vec{x}]_{\alpha},[\vec{y}]_{\alpha}\rangle= \langle M\vec{x},M\vec{y}\rangle=\langle \vec{x},M^T M\vec{y}\rangle=\langle \vec{x},\vec{y}\rangle
+    \]
+\end{proof}
+\begin{proof}[2]
+    Assume $[T]^{\alpha}_{\alpha}$ is symmetric.
+    Then $\langle [T]^{\alpha}_{\alpha}[\vec{x}]_{\alpha},[T]^{\alpha}_{\alpha}[\vec{y}]_{\alpha}\rangle$.
+    So $\langle [T(\vec{x})]_{\alpha},[T(\vec{y})]_{\alpha}\rangle$.
+    So $\langle T(\vec{x}),T(\vec{y})\rangle$.
+\end{proof}
+
+\begin{definition}
+    Let $S\subseteq\mathbb{R}^n$ be a subspace.
+    Then $T:W\rightarrow W$ is a symmetric linear transformation if $\langle T(\vec{x}),\vec{y}\rangle = \langle \vec{x},T(\vec{y})\rangle$ for all $\vec{x},\vec{y}\in\mathbb{R}^n$
+\end{definition}
+
+\section{Spectral Theorem}
+
+\begin{theorem}
+    Let $A$ be an $n\times n$ matrix.
+    If $A$ is symmetric, then all roots of the characteristic polynomial $\chi_A(t)$ are real.
+\end{theorem}
+
+\begin{proposition}
+    Let $A$ be an symmetric $n\times n$ matrix.
+    $\vec{x_1},\dots,\vec{x_k}$ are eigenvectors with distinct eigenvalues $\lambda_1,\dots,\lambda_k$.
+    Then $\vec{x_1},\dots,\vec{x_k}$ are orthogonal.
+\end{proposition}
+
+\begin{corollary}
+    A $n\times n$ matrix is symmetric if $\lambda_1,\dots ,\lambda_k$ are distinct eigenvalues. Then 
+    \[
+    \mathbb{R}^n=E_{\lambda_1}\oplus\dots \oplus E_{\lambda_k}
+    \]
+    \[
+    E_{\lambda_i} \perp E_{\lambda_j} \quad\text{for }i\neq j
+    \]
+\end{corollary}
+
+\begin{theorem}[Spectral Theorem]
+Let $T:\mathbb{R}^n\rightarrow \mathbb{R}^n$ be a symmetric linear transformation, and $\lambda_1,\dots ,\lambda_k$ be distinct eigenvalues. 
+    Denote $P_j=P_{E_{\lambda_j}}$.
+    \begin{enumerate}
+        \item $T=\lambda_1 P_1+\cdots+\lambda_k P_k$
+        \item $I=P_1+\cdots+P_k$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Let $\vec{v}\in\mathbb{R}^n$, write $\vec{v}=\vec{v_1}+\cdots+\vec{v_k}$ where $\vec{v_j}\in E_{\lambda_j}$, then $P_j(\vec{v})=\vec{v_j}$.
+    Then
+    \[
+    I(\vec{v})=\vec{v}=P_1(\vec{v})+\cdots+P_k(\vec{v})
+    \]
+    \[
+    \begin{aligned}
+        T(\vec{v})
+        &=T(\vec{v_1})+\cdots +T(\vec{v_k})\\
+        &=\lambda_1\vec{v_1}+\cdots+\lambda_k\vec{v_k}\\
+        &=\lambda_1P_1(\vec{v})+\cdots+\lambda_kP_k(\vec{v})
+    \end{aligned}
+    \]
+\end{proof}
+
+\begin{definition}
+    A $n\times n$ matrix is orthogonal if $A^T A=I$.
+\end{definition}
+
+\begin{theorem}
+    $A=[\vec{a_1}\cdots\vec{a_n}]$ is orthogonal if and only if $\{\vec{a_1}\cdots\vec{a_n}\}$ is orthonormal.
+\end{theorem}
+
+\begin{theorem}
+    Let $T:\mathbb{R}^n\rightarrow \mathbb{R}^n$ be a symmetric linear transformation. Then there is an orthonormal basis consisting of eigenvectors.
+\end{theorem}
+
+\end{document}

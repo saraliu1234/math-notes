@@ -1,0 +1,430 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Linear Transformation}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Linear Transformation}
+\begin{definition}
+    A function $T:V\rightarrow W$ between vector space $V, W$ is a linear transformation if it satisfies conditions:
+    \begin{enumerate}
+        \item $T(\vec{x}+\vec{y})=T(\vec{x})+T(\vec{y})$
+        \item $T(c\vec{x})=cT(\vec{x})$
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    Let $T$ be a linear transformation, then $T(\vec{0_V})=\vec{0_W}$.
+\end{proposition}
+
+\begin{proof}
+    For any $\vec{x} \in V$, $T(\vec{0_V})=T(0\cdot \vec{x})=0\cdot T(\vec{x})=\vec{0_W}$
+\end{proof}
+
+\begin{proposition}
+    Let $T$ be a linear transformation and $S=\{\vec{v_1},\dots ,\vec{v_m}\}$ is a basis of $V$, then $T(\vec{v_1}), \dots ,T(\vec{v_m})$ determines $T$.
+\end{proposition}
+
+\begin{proof}
+    For any $\vec{v}\in V$, we could express $\vec{v}$ uniquely as $\vec{v}=a_1\vec{v_1}+\dots+a_m\vec{v_m}$. Then 
+    \[
+    T(\vec{v})=a_1T(\vec{v_1})+ \dots +a_mT(\vec{v_m})
+    \]
+    so we conclude that $T(\vec{v_1}), \dots ,T(\vec{v_m})$ determines $T$.
+\end{proof}
+
+\section{Matrix Associated with Linear Transformation}
+
+\begin{definition}[Coordinate Vector]
+    Let $V$ be a vector space, and $\alpha=\{\vec{v_1},\dots, \vec{v_n}\}$ a basis of $V$. Then the coordinate for vector $\vec{v}\in V$ with respect to $\alpha$ is 
+    \[
+    [\vec{v}]_{\alpha}=
+    \begin{pmatrix}
+a_1 \\ \vdots \\ a_n
+\end{pmatrix}
+    \]
+    where $\vec{v}=a_1\vec{v_1}+\dots+a_n\vec{v_n}$.
+\end{definition}
+
+\begin{definition}
+    Let $T:V\rightarrow W$ be a linear transformation. $\alpha=\{\vec{v_1},\dots, \vec{v_n}\}$ is a basis of $V$, and $\beta = \{\vec{w_1},\dots, \vec{w_m}\}$ is a basis of $W$.
+    We could write
+    \[
+    \begin{aligned}
+        T(\vec{v_1})&= a_{11}\vec{w_1}+a_{21}\vec{w_2}+\dots+a_{m1}\vec{w_m}\\
+        T(\vec{v_2})&= a_{12}\vec{w_1}+a_{22}\vec{w_2}+\dots+a_{m2}\vec{w_m}\\
+        &\dots\\
+        T(\vec{v_n})&= a_{1n}\vec{w_1}+a_{2n}\vec{w_2}+\dots+a_{mn}\vec{w_m}
+    \end{aligned}
+    \]
+    Then the matrix of $T$ with respect to $\alpha, \beta$ is 
+    \[
+    [T]_{\alpha}^{\beta}=
+    \begin{bmatrix}
+    a_{11} & a_{12} & \dots & a_{1n} \\
+    a_{21} & a_{22} & \dots & a_{2n} \\
+    \dots & \dots & \dots & \dots\\
+    a_{m1} & a_{m2} & \dots & a_{mn}
+    \end{bmatrix}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Let $T:V\rightarrow W$ be a linear transformation.
+    $\alpha=\{\vec{v_1},\dots, \vec{v_n}\}$ is a basis of $V$, and $\beta = \{\vec{w_1},\dots, \vec{w_m}\}$ is a basis of $W$.
+    Then we have
+    \[
+    [T]_{\alpha}^{\beta}[\vec{x}]_{\alpha}=[T(\vec{x})]_{\beta}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Let $\vec{x}=a_1\vec{v_1}+\dots+a_n\vec{v_n}$, then $[\vec{x}]_{\alpha}=(a_1,\dots,a_n)$.
+    Then,
+    \[
+    \begin{aligned}
+        T(\vec{x})&=T(a_1\vec{v_1}+\dots+a_n\vec{v_n})\\
+    &=a_1T(\vec{v_1})+ \dots +a_nT(\vec{v_n})\\
+    &=a_1\sum_{j=1}^{m}a_{j1}\vec{w_j}+\dots+a_n\sum_{j=1}^{m}a_{jn}\vec{w_j}\\
+    &=\vec{w_1}\sum_{i=1}^{n}a_ia_{1i}+\dots +\vec{w_m}\sum_{i=1}^{n}a_ia_{mi}
+    \end{aligned}
+    \]
+    So, 
+    \[
+    [T(\vec{x})]_{\beta}=
+    \begin{bmatrix}
+        a_1a_{11}+\dots+a_na_{1n}\\
+        \dots\\
+        a_1a_{m1}+\dots+a_na_{mn}
+    \end{bmatrix}
+    \]
+    Therefore,
+    \[
+    [T]_{\alpha}^{\beta}[\vec{x}]_{\alpha}=
+    \begin{bmatrix}
+    a_{11} & a_{12} & \dots & a_{1n} \\
+    a_{21} & a_{22} & \dots & a_{2n} \\
+    \dots & \dots & \dots & \dots\\
+    a_{m1} & a_{m2} & \dots & a_{mn}
+    \end{bmatrix}
+    \begin{bmatrix}
+        a_1\\ \vdots\\a_n
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        a_1a_{11}+\dots+a_na_{1n}\\
+        \dots\\
+        a_1a_{m1}+\dots+a_na_{mn}
+    \end{bmatrix}=[T(\vec{x})]_{\beta}
+    \]
+\end{proof}
+
+\begin{example}
+    The change of basis coordinate matrix is $[I]_{\alpha}^{\beta}$.
+\end{example}
+
+\section{Kernel, Image and Dimensional Theorem}
+
+\begin{definition}[Kernel/Image]
+    Let $T:V\rightarrow W$ be a linear transformation. 
+    The \textbf{Kernel} of $T$ is the subset of $V$ that satisfies:
+    \[
+    \text{Ker}(T):=\{\vec{v}\in V:T(\vec{v})=\vec{0_W}\}
+    \]
+    The \textbf{Image} of $T$ is the subset of $W$ that satisfies:
+    \[
+    \text{Im}(T):=\{\vec{w}\in W:\exists \vec{v}\in V\;\text{s.t.}\;T(\vec{v})=\vec{w}\}
+    \]
+\end{definition}
+
+\begin{theorem}
+    Let $T:V\rightarrow W$ be a linear transformation. 
+    \begin{enumerate}
+        \item $\text{Ker}(T)$ is a subspace of $V$
+        \item $\text{Im}(T)$ is a subspace of $W$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We know from $T(\vec{0_V})=\vec{0_W}$ that $\vec{0_V}\in\text{Ker}(T)$.
+    For $\vec{x},\vec{y}\in\text{Ker}(T)$, $T(\vec{x})=\vec{0_W}$, $T(\vec{y})=\vec{0_W}$.
+    From the linearity of transformation $T$, we know that $T(\vec{x}+\vec{y})=T(\vec{x})+T(\vec{y})=\vec{0_W}+\vec{0_W}=\vec{0_W}$.
+    Also, $T(c\vec{x})=cT(\vec{x})=c\vec{0_W}=\vec{0_W}$.
+\end{proof}
+
+\begin{theorem}
+    Let $T:V\rightarrow W$ be a linear transformation between finite dimensional vector spaces.
+    Let $\alpha$ be a basis for $V$, and $\beta$ be a basis for $W$. 
+    Then we have
+    \begin{enumerate}
+        \item $\vec{x}\in\text{Ker}(T) \iff [\vec{x}]_{\alpha}\in\text{Nul}[T]_{\alpha}^{\beta}$
+        \item $\vec{y}\in\text{Im}(T) \iff [\vec{y}]_{\beta}\in\text{Col}[T]_{\alpha}^{\beta}$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Let $\vec{x}\in\text{Ker}(T)$, then $T(\vec{x})=\vec{0}$.
+    Because $[T]_{\alpha}^{\beta}[\vec{x}]_{\alpha}=[T(\vec{x})]_{\beta}=\vec{0}$, so $[\vec{x}]_{\alpha}\in\text{Nul}[T]_{\alpha}^{\beta}$.
+
+    Let $\vec{y}\in\text{Im}(T)$, then $\exists \vec{v}\in V \text{ s.t. }\vec{y}=T(\vec{v})$.
+    Because $[\vec{y}]_{\beta}=[T(\vec{v})]_{\beta}=[T]_{\alpha}^{\beta}[\vec{v}]_{\alpha}$, so $[\vec{y}]_{\beta}\in\text{Col}[T]_{\alpha}^{\beta}$.
+\end{proof}
+
+\begin{theorem}
+    Let $V$ be a vector space, and $\alpha=\{\vec{v_1},\dots, \vec{v_n}\}$ be a basis of $V$.
+    Then $\{\vec{x_1},\dots, \vec{x_n}\}$ is linearly independent if and only if $\{[\vec{x_1}]_{\alpha},\dots, [\vec{x_n}]_{\alpha}\}$ is linearly independent.
+\end{theorem}
+
+\begin{proof}
+$a_1\vec{x_1}+\dots+a_n\vec{x_n}=\vec{0}$ if and only if $a_1=\dots=a_n=0$.
+    \[
+    \begin{aligned}
+        a_1\vec{x_1}+\dots+a_n\vec{x_n}\iff[a_1\vec{v_1}+\dots+a_n\vec{v_n}]_{\alpha}\iff a_1[\vec{v_1}]_{\alpha}+\dots+a_n[\vec{v_n}]_{\alpha}
+    \end{aligned}
+    \]
+    so $a_1[\vec{v_1}]_{\alpha}+\dots+a_n[\vec{v_n}]_{\alpha}=[\vec{0}]_{\alpha}$ if and only if $a_1=\dots=a_n=0$.
+    So $\{[\vec{x_1}]_{\alpha},\dots, [\vec{x_n}]_{\alpha}\}$ is linearly independent.
+        
+    The opposite could be reasoned using the same argument
+\end{proof}
+
+\begin{theorem}
+    Let $T:V\rightarrow W$ be a linear transformation. 
+    Let $V$ be a finite dimensional vector space. Then
+    \[
+    \dim (\text{Ker} (T))+\dim(\text{Im}(T))=\dim V
+    \]
+\end{theorem}
+
+\begin{proof}
+    Assume $W$ is finite dimensional.
+    Let $\alpha$ be a basis of $V$, and $\beta$ be a basis of $W$. 
+    Write $M=[T]_{\alpha}^{\beta}$. Then 
+    \[
+    \dim (\text{Ker} (T))+\dim(\text{Im}(T))=\dim (\text{Nul} )(M)+\dim(\text{Col}(M))= \text{cols}(M) =\dim V
+    \]
+\end{proof}
+
+\begin{proof}[Alternative]
+    Let $\{\vec{v_1},\vec{v_2},\dots,\vec{v_k}\}$ be a basis of $\ker(T)$.
+    Extend the basis to $\{\vec{v_1},\vec{v_2},\dots,\vec{v_n}\}$ to be a basis of $V$.
+    \begin{claim}
+        $\{T(\vec{v_{k+1}}),\dots,T(\vec{v_n})\}$ is a basis of Im$(T)$
+    \end{claim}
+\begin{proof}
+    Let $\vec{w}\in \text{Im}(T)$.
+    Then there exists $\vec{v}\in V$, such that $T(\vec{v})=\vec{w}$.
+    Write $\vec{v}$ as $\vec{v}=a_1\vec{v_1}+\dots+a_n\vec{v_n}$.
+    From $\vec{v_1},\vec{v_2},\dots,\vec{v_k}\in\ker(T)$, we know that $T(\vec{v_1})=0,T(\vec{v_2})=0,\dots,T(\vec{v_k})=0$.
+    Then
+    \[
+    \begin{aligned}
+    \vec{w}=T(\vec{v})&=T(a_1\vec{v_1}+\dots+a_n\vec{v_n})\\
+    &=a_1T(\vec{v_1})+\dots+a_nT(\vec{v_n})\\
+    &=a_{k+1}T(\vec{v_{k+1}})+\dots+a_nT(\vec{v_n})\\
+    &\in \text{Span}(T(\vec{v_{k+1}}),\dots,T(\vec{v_n}))
+    \end{aligned}
+    \]
+    Next, we prove that $\{T(\vec{v_{k+1}}),\dots,T(\vec{v_n})\}$ is a linearly independent.
+    \[
+    \begin{aligned}
+        &a_{k+1}T(\vec{v_{k+1}})+\dots+a_nT(\vec{v_n})=\vec{0}\\
+        \iff &T(a_{k+1}\vec{v_{k+1}}+\dots+a_n\vec{v_n})=\vec{0}\\
+        \iff & a_{k+1}\vec{v_{k+1}}+\dots+a_n\vec{v_n}=\vec{0}
+    \end{aligned}
+    \]
+    Because $\{\vec{v_1},\dots,\vec{v_n}\}$ is linearly independent, so $a_{k+1}=\dots=a_n=0$
+\end{proof}
+
+\end{proof}
+
+\section{Injectivity and Surjectivity}
+
+\begin{definition}
+    Let $T$ be a function
+    \begin{enumerate}
+        \item $T$ is injective (one-to-one) if $T(\vec{v_1})=T(\vec{v_2})\implies \vec{v_1}=\vec{v_2}$
+        \item $T$ is surjective (onto) if for every $\vec{w}\in W$ there exists $\vec{v}\in V$ such that $T(\vec{v})=\vec{w}$.
+        In other words, $W=\text{Im}(V)$.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Let $T:V\rightarrow W$ be a linear transformation. 
+    $T$ is injective if and only if $\text{Ker}(T)=\{\vec{0}\}$.
+\end{theorem}
+
+\begin{proof}
+    Assume $T$ is injective. 
+    For any $\vec{v}\in \text{Ker}(T)$, we have $T(\vec{v})=\vec{0_W}$.
+    For every linear transformation, we have $T(\vec{0_V})=\vec{0_W}$.
+    Since $T$ is injective, we have that $\vec{v}=\vec{0_V}$, so $\text{Ker}(T)=\{\vec{0}\}$.
+    For the opposite direction, we assume $\text{Ker}(T)=\{\vec{0}\}$.
+    Suppose $T(\vec{v_1})=T(\vec{v_2})$, then $T(\vec{v_1})-T(\vec{v_2})=0$, so $T(\vec{v_1}-\vec{v_2})=\vec{0_W}$.
+    Because $T$ is injective, so $\vec{v_1}-\vec{v_2}=\vec{0_V}$, so $\vec{v_1}=\vec{v_2}$.
+\end{proof}
+
+\begin{theorem}
+    Suppose $V$ and $W$ are finite dimensional vector spaces.
+    \begin{enumerate}
+        \item If $T$ is injective, then $\dim V\leq\dim W$.
+        \item If $T$ is surjective, then $\dim W\leq\dim V$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Assume $T$ is injective. 
+    Then $\dim(\text{Ker(T)})=0$. 
+    So $\dim V=\dim(\text{Im}(T))\leq\dim W$.
+    For the second statement, we assume that $T$ is surjective.
+    Then $\dim(\text{Im}(T))=\dim W$, so $\dim V=\dim(\text{Ker(T)})+\dim(\text{Im}(T))\geq\dim(\text{Im}(T))=\dim W$
+\end{proof}
+
+\begin{corollary}
+    Suppose $\dim V=\dim W$.
+    $T$ is injective if and only if $T$ is surjective.
+\end{corollary}
+
+\begin{proof}
+    Assume $T$ is injective, then $\dim W=\dim V=\dim(\text{Ker(T)})+\dim(\text{Im}(T))=\dim(\text{Im}(T))$.
+    So $T$ is surjective.
+    Assume $T$ is surjective, then $\dim(\text{Im}(T))=\dim W=\dim V=\dim(\text{Ker(T)})+\dim(\text{Im}$, so $\dim(\text{Ker(T)})=0$. 
+    So $T$ is injective.
+\end{proof}
+
+\begin{definition}
+    Let $T:V\rightarrow W$ be a linear transformation. 
+    We say $T$ is an isomorphism if it is both injective and surjective.
+    We say that $V$ is isomorphic to $W$.
+\end{definition}
+
+\section{Composition}
+
+\begin{definition}
+    Let  $U,V,W$ be vector spaces. And $S:U\rightarrow V$, $T:V\rightarrow W$ the linear transformation. The composition of $S$ and $T$ is the function $TS:U\rightarrow W$ defined by $TS(\vec{u})=T(S(\vec{u}))$.
+\end{definition}
+
+\begin{proposition}
+    Let $S:U\rightarrow V$, $T:V\rightarrow W$ be linear transformations. Then $TS:U\rightarrow W$ is also a linear transformation.
+\end{proposition}
+
+\begin{proof}
+    Let $\vec{x},\vec{y}\in U,c\in\mathbb{R}$.
+    Then $TS(\vec{x}+\vec{y})=T(S(\vec{x}+\vec{y}))=T(S(\vec{x})+S(\vec{y}))=T(S(\vec{x}))+T(S(\vec{y}))=TS(\vec{x})+TS(\vec{y})$.
+    $TS(c\vec{x})=T(S(c\vec{x}))=T(cS(\vec{x}))=cT(S(\vec{x}))=cTS(\vec{x})$.
+\end{proof}
+
+\begin{theorem}
+    Let $S:U\rightarrow V$, $T:V\rightarrow W$ be linear transformations on finite dimensional vector spaces.
+    $\alpha,\beta,\gamma$ are basis of $U,V,W$ respectively. 
+    Then
+    \[
+    [TS]_{\alpha}^{\gamma}=[T]_{\beta}^{\gamma}[S]_{\alpha}^{\beta}
+    \]
+\end{theorem}
+
+\begin{proof}
+    $[TS]_{\alpha}^{\gamma}[\vec{x}]_{\alpha}=[TS(\vec{x})]_{\gamma}=[T(S(\vec{x}))]_{\gamma}=[T]_{\beta}^{\gamma}[S(\vec{x})]_{\beta}=[T]_{\beta}^{\gamma}[S]_{\alpha}^{\beta}[\vec{x}]_{\alpha}$
+\end{proof}
+
+\section{Inverse}
+
+\begin{definition}
+    Let $T:V\rightarrow W$ a linear transformation. 
+    An inverse $S:W\rightarrow V$ is a function, satisfies 
+    \[
+    \begin{aligned}
+        ST(\vec{v})&=\vec{v}\quad \text{for all}\;\vec{v}\in V\\
+        TS(\vec{w})&=\vec{w}\quad \text{for all}\;\vec{w}\in W
+    \end{aligned}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Let $T:V\rightarrow W$ a linear transformation. 
+    Let $S:W\rightarrow V$ be the inverse of $T$.
+    Then $S$ is linear.
+\end{proposition}
+
+\begin{proof}
+    For $\vec{z},\vec{w}\in W$.
+    Let $S(\vec{z})=\vec{x}$, then $T(\vec{x})=\vec{z}$.
+    Let $S(\vec{w})=\vec{y}$, then $T(\vec{x})=\vec{w}$.
+    Then
+    \[
+    \begin{aligned}
+        &S(\vec{z}+\vec{w})=S(T(\vec{x})+T(\vec{y}))=S(T(\vec{x}+\vec{y}))=\vec{x}+\vec{y}=S(\vec{z})+S(\vec{w})\\
+        &S(c\vec{z})=S(cT(\vec{x}))=S(T(c\vec{x}))=c\vec{x}=cS(\vec{z})
+    \end{aligned}
+    \]
+\end{proof}
+
+\begin{proposition}
+    $T:V\rightarrow W$ has an inverse if and only if $T$ is isomorphism.
+\end{proposition}
+
+\begin{proposition}
+    Let $T:V\rightarrow W$ be a isomorphism between finite dimensional vector spaces. Then $\dim (V)=\dim (W)$.
+\end{proposition}
+
+\begin{proof}
+$\dim (V)=\dim (\text{Ker}(T))+\dim (\text{Im}(T))=\dim (W)$
+\end{proof}
+
+\begin{theorem}
+    Let $V,W$ be finite dimensional vector spaces.
+    If $\dim (V)=\dim(W)$, then there exists an isomorphism $T:V\rightarrow W$.
+\end{theorem}
+
+\begin{proof}
+    Let $\alpha=\{\vec{v_1},\dots, \vec{v_n}\}$ be a basis of $V$, and $\beta=\{\vec{w_1},\dots, \vec{w_n}\}$ be a basis of $W$.
+    Define $T(\vec{v_j})=\vec{w_j}$ for all $j=1,\dots,n$.
+
+    First, prove that $T$ is injective.
+    Write $\vec{v}=a_1\vec{v_1}+\dots+a_n\vec{v_n}$.
+    Then $\vec{0_W}=T(\vec{v})=T(a_1\vec{v_1}+\dots+a_n\vec{v_n})=a_1T(\vec{v_1})+\dots+a_nT(\vec{v_n})=a_1\vec{w_1}+\dots+a_n\vec{w_n}$.
+    Because $\{\vec{w_1},\dots, \vec{w_n}\}$ is a basis, so $a_1=\dots =a_n=0$, so $\vec{v}=\vec{0}$.
+
+    Next, prove that $T$ is surjective.
+    For $\vec{w}\in W$, write $\vec{w}=b_1\vec{w_1}+\dots+b_n\vec{w_n}$.
+    Then $T(b_1\vec{v_1}+\dots+b_n\vec{v_n})=b_1T(\vec{v_1})+\dots+b_nT(\vec{v_n})=b_1\vec{w_1}+\dots+b_n\vec{w_n}=\vec{w}$, so the image of $T$ is $W$.
+
+\end{proof}
+
+\begin{proposition}
+    Let $T:V\rightarrow W$ be a isomorphism between finite dimensional vector spaces.
+    $T^{-1}$ is the inverse of $T$.
+    Let $\alpha,\beta$ be basis of $V,W$.
+    Then 
+    \[
+    [T^{-1}]_{\beta}^{\alpha}=([T]_{\alpha}^{\beta})^{-1}
+    \]
+\end{proposition}
+
+\begin{proof}
+    $[T^{-1}]_{\beta}^{\alpha}[T]_{\alpha}^{\beta}=[T^{-1}T]_{\alpha}^{\alpha}=[I]_{\alpha}^{\alpha}=I$
+\end{proof}
+
+\end{document}

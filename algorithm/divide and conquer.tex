@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Divide and Conquer}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Master Theorem}
+\begin{theorem}[Master Theorem]
+    Let $a\geq 1$ and $b>1$ be constants, $f(n)$ be a function, and $T(n)$ be defined on nonnegative integers by the recurrence $T(n)\leq a\cdot T(\frac{n}{b})+f(n)$, where $n/b$ can be $\lceil \frac{n}{b}\rceil$. Let $d=\log_b a$. Then:
+    \begin{enumerate}
+        \item If $f(n)=O(n^{d-\epsilon})$ for some constant $\epsilon>0$, then $T(n)=O(n^d)$.
+        \item If $f(n)=O(n^{d}\log^k n)$ for some constant $k\geq0$, then $T(n)=O(n^{d}\log^{k+1} n)$.
+        \item If $f(n)=O(n^{d+\epsilon})$ for some constant $\epsilon>0$, then $T(n)=O(f(n))$.
+    \end{enumerate}
+\end{theorem}
+
+\end{document}

@@ -1,0 +1,233 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+
+\title{Stochastic Dual Dynamic Programming}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+
+In stochastic programming, we treat each quantities as a random variable rather than deterministic data points.
+
+So instead of solving
+\[
+\min_{x} \; f(x) \qquad \text{subject to } g(x) \le 0,
+\]
+
+you solve something like
+\[
+\min_{x} \; \mathbb{E}\big[ f(x,\xi) \big]
+\qquad \text{subject to } 
+\mathbb{P}\big( g(x,\xi) \le 0 \big) \ge 1 - \alpha,
+\]
+
+where $\xi$ represents uncertainty (random demand, prices, noise, etc.).
+
+\section{Stochastic process}
+We consider a multistage decision process in which each decisions $x_t$ have to be taken over some horizon $[T] := \{ 1, \dots, T\}$ consisting of $T$ stages, with the aim to minimize some objective function subject to constraints. For now, the horizon $T$ is assumed to
+satisfy the following assumption.
+
+\begin{assumption}[finite and deterministic horizon]
+The number $T\in \mathbb{N}$ of stages is
+finite and deterministic.
+\end{assumption}
+
+% We consider a filtered probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with sample space $\Omega$, $\sigma$-algebra $\mathcal{F}$, and probability measure $\mathbb{P}$, which models the uncertainty over the horizon $[T]$. 
+% Further, let $\mathcal{F}_1, \ldots, \mathcal{F}_T$ with $\mathcal{F}_T := \mathcal{F}$ be a sequence of $\sigma$-algebras containing the events observable up to time $t$, thus defining a filtration with $\mathcal{F}_1 \subseteq \mathcal{F}_2 \cdots \subseteq \mathcal{F}_T$, and let $\Omega_t$ be the sample space restricted to stage $t \in [T]$. 
+A \textbf{stochastic process} is defined as $(\xi_t)_{t \in [T]}$ with random vectors $\xi_t : \Omega_t \to \mathbb{R}^{\kappa_t}$, 
+$\kappa_t \in \mathbb{N}$, over the probability space. 
+% These random vectors are assumed to be $\mathcal{F}_t$\textit{-measurable functions}. 
+The collection of all possible $\xi_t$'s could be denoted as $\Xi_t \subseteq \mathbb{R}^{\kappa_t}$ for all $t \in [T]$. For the first stage, the data are assumed deterministic; i.e., $\Xi_1$ is a singleton. 
+
+\begin{assumption}[Stagewise independence]
+For all $t \in [T]$, the random vector $\xi_t$ is independent of the history 
+$\xi_{[t-1]} := (\xi_1,\ldots,\xi_{t-1})$ of the data process.
+\end{assumption}
+
+The random vectors $\xi_t$ are often referred to as \emph{noises}. 
+
+\begin{assumption}[Known distribution]
+The probability distribution $F_{\xi}$ of the data process $(\xi_t)_{t\in[T]}$ is known.
+\end{assumption}
+
+\begin{assumption}[Exogeneity]
+The random variables $\xi_t$ are exogenous, i.e., the distribution $F_{\xi}$ of the data 
+process $(\xi_t)_{t\in[T]}$ is independent of decisions $(x_t)_{t\in[T]}$.
+\end{assumption}
+
+\begin{assumption}[Finite randomness]
+The support $\Xi_t$ of $\xi_t$ is finite for all $t \in [T]$. The number of noise 
+realizations at stage $t \in [T]$ is given by $q_t \in \mathbb{N}$ with $q_1 = 1$.
+\end{assumption}
+
+As $\xi_t$ is a discrete and finite random variable for all $t \in [T]$, its distribution $F_{\xi}$ is defined by finitely many realizations $\xi_{tj}$, $j = 1,\ldots,q_t$, and assigned probabilities $p_{tj}$.
+
+The stagewise-independent and finite data process $(\xi_t)_{t\in[T]}$ can be illustrated 
+by a \emph{recombining scenario tree}~\cite{185}, also called \emph{scenario lattice}~\cite{136}. 
+On each stage $t \in [T]$, its nodes represent the possible noise realizations 
+$\xi_{tj}$, $j = 1,\ldots,q_t$. Due to stagewise independence (Assumption~2), all nodes 
+at the same stage have an identical set of child nodes with the same noise realizations 
+and associated probabilities. We call paths $\xi = (\xi_t)_{t\in[T]}$ through the 
+complete tree (stage-$T$) \emph{scenarios} and index them by $s \in \mathcal{S}$. Note 
+that, for each scenario $\xi^s$, there exists some $j_s \in \{1,\ldots,q_t\}$ such that 
+$\xi_t^s = \xi_{t j_s}$. The total number of different scenarios modeled by the tree is
+$|\mathcal{S}| = \prod_{t \in [T]} q_t$. An example of a recombining scenario tree is 
+presented in Figure~1.
+
+\section{Decision Process}
+
+With the stochastic process in mind, we can now turn to the decision process. 
+At stage~1, the \emph{here-and-now} decision $x_1$ is taken to hedge against the 
+uncertainty in the following stages. At those stages, recourse decisions 
+$x_t \in \mathbb{R}^{n_t}$, $n_t \in \mathbb{N}$, can be taken with knowledge of the 
+realization of the data process at stage~$t$. This decision process is illustrated 
+in Figure~2.
+
+In other words, the paradigm is that decisions can be taken \emph{after} the 
+uncertainty corresponding to stage~$t$ has unfolded (so-called \emph{wait-and-see} decisions), making $x_t(\xi_t)$ a function of $\xi_t$, and by that a random variable. Importantly, $x_t(\cdot)$ only depends on 
+realizations up to stage~$t$, but does not anticipate future events or decisions. 
+Future events are only considered using distributional information. Therefore, 
+$x_t(\cdot)$ is $\mathcal{F}_t$-measurable. As we will see, $x_t(\cdot)$ 
+may also depend on the choice of $x_{t-1}(\cdot)$ and so on, so that despite 
+stagewise independence (Assumption~2), $x_t(\cdot)$ is actually a function of the 
+whole history $\xi_{[t]}$ of the data process.
+
+A sequence of decision functions $(x_t(\xi_{[t]}))_{t \in [T]}$ is called a 
+\emph{policy} and provides a decision rule for all stages $t \in [T]$ and any 
+realization of the data process. By the previous arguments, such a policy is 
+\emph{nonanticipative}, modeling a sequence of nested conditional decisions. 
+The aim of the decision process is to determine an \emph{optimal} policy with respect to a given objective function and a given set of constraints. 
+
+\begin{assumption}[Linearity]
+All functions occurring in the objective and the constraints are linear.
+\end{assumption}
+
+\begin{assumption}[Consecutive coupling]
+Only decisions on consecutive stages can be linked by constraints.
+\end{assumption}
+
+\begin{assumption}[Risk-neutral policy]
+The aim is to determine an optimal risk-neutral policy.
+\end{assumption}
+
+Under Assumptions~6 and~8, the optimization objective can be expressed as
+\begin{equation}\label{eq:objective}
+\min_{x_1,x_2,\ldots,x_T} \;
+\mathbb{E}\!\left[
+\sum_{t \in [T]} \big(c_t(\xi_t)\big)^{\top} x_t(\xi_{[t]})
+\right],
+\end{equation}
+with data vectors $c_t \in \mathbb{R}^{n_t}$ for all $t \in [T]$ and $\mathbb{E}[\cdot]$ 
+denoting the expected value.
+
+Under Assumptions~6 and~7, for all $t \in [T]$, the constraints on the decisions can be 
+expressed using the $\mathcal{F}_t$-measurable set-valued mappings $\mathcal{X}_t(\cdot)$, 
+which for any $x_{t-1}$ and any $\xi_t \in \Xi_t$ are defined by
+\begin{equation}\label{eq:constraints}
+\mathcal{X}_t(x_{t-1},\xi_t)
+:=
+\left\{
+x_t \in X_t \subset \mathbb{R}^{n_t}
+\;\middle|\;
+T_{t-1}(\xi_t)x_{t-1} + W_t(\xi_t)x_t = h_t(\xi_t)
+\right\}.
+\end{equation}
+
+Here, $h_t \in \mathbb{R}^{m_t}$ are real data vectors (for $m_t \in \mathbb{N}$), 
+$T_t$ and $W_t$ are real-valued $(m_{t+1} \times n_t)$ and $(m_t \times n_t)$ data 
+matrices, and $X_t$ is a nonempty polyhedron, e.g., modeling nonnegativity constraints.
+
+As stated above, some (or all) of the problem data can be subject to uncertainty. 
+Hence, for all $t \in [T]$, we consider random variables $c_t(\xi_t)$, 
+$T_{t-1}(\xi_t)$, $W_t(\xi_t)$, and $h_t(\xi_t)$ depending on realizations of $\xi_t$. 
+$X_t$ is considered deterministic. Note again that the first stage is assumed to be 
+deterministic and that $T_0 \equiv 0$ and $x_0 \equiv 0$. Hence, we define
+\[
+\mathcal{X}_1 := \mathcal{X}_1(x_0,\xi_1).
+\]
+
+\begin{remark}
+For notational simplicity, when we deal with finite random variables $\xi_t$, we often 
+index the vectors and matrices $c_t$, $T_{t-1}$, $W_t$, and $h_t$ with $j=1,\ldots,q_t$ 
+if we address specific realizations, e.g., $c_{tj} := c_t(\xi_{tj})$.
+\end{remark}
+
+\begin{remark}[Dynamic programming perspective]
+In dynamic programming, Markov decision processes, or optimal control, a slightly 
+different perspective on sequential decision processes is usually chosen. The main difference is that the variables that occur 
+are split into \emph{state variables} and actual \emph{decisions}. State variables 
+$s_t \in S_t$ model the system state at some stage $t$. $S_t$ is called the 
+\emph{state space}. Importantly, state variables may comprise not only the resource 
+state, but also the information or belief state of a system. Decision 
+variables model local decisions on a stage $t$ given a state $s_t$. In dynamic 
+programming they are usually discrete and called \emph{actions} $a_t \in A_t(s_t)$; 
+in optimal control they are usually continuous and called \emph{controls} 
+$u_t \in U_t(s_t)$. $A_t(s_t)$ and $U_t(s_t)$ are the \emph{action space} and the 
+\emph{control space}, respectively.
+\end{remark}
+
+The actions or controls are what an agent actually decides on given the current state 
+$s_t$, whereas the new state $s_{t+1}$ is uniquely determined as
+\[
+s_{t+1} = \mathcal{T}_t(s_t,u_t,\xi_{t+1})
+\]
+using a given transition function $\mathcal{T}_t(\cdot)$ that captures the system 
+dynamic. Therefore, from this perspective, a policy is a sequence of mappings 
+$\pi_t : S_t \to U_t$ from the state space to the control (or action) space. By proper 
+modeling of the state variable, Assumption~7 is naturally satisfied.
+
+In our above setting, states and actions are intertwined. We can set 
+$s_t = (x_{t-1},\xi_t)$ and $u_t = x_t$ to switch perspectives~\cite{6}. The state space, 
+control space, and transition function are then implicitly given by~(2.2) and the 
+definition of $\xi_t$.
+
+While our definitions above are prevalent in the literature on SDDP, sometimes an optimal control perspective is also adopted, e.g., in the French community working on SDDP. However, in this case usually only the resource state $r_t$ is explicitly considered as a state variable (while not including information on $\xi_t$). Translating our above setting, this implies that $r_t = x_{t-1}$ with state space $R_t = X_t$, $u_t = x_t$, and, due to $r_{t+1} = u_t$, both the control space $U_t(r_t,\xi_t)$ and the transition function $\mathcal{T}_t(r_t,u_t,\xi_t)$ are given by the equations in (2.2).
+
+It is worth mentioning that the distinction between state variables and controls 
+(actions) is not only a matter of notation, but is also computationally relevant 
+because the complexity of SDDP differs in the state and control dimensions.
+
+Given the constraint sets (2.2) for all $t \in [T]$, let $\mathcal{X}_0 := \{x_0\}$ and 
+recursively define
+\[
+\mathcal{X}_t :=
+\bigcup_{x_{t-1} \in \mathcal{X}_{t-1}}
+\;\bigcup_{\xi_t \in \Xi_t}
+\mathcal{X}_t(x_{t-1},\xi_t),
+\]
+for all $t \in [T]$. Using these definitions, we are able to state 
+assumptions required for the feasibility of our decision problem.
+
+\begin{assumption}[Feasibility and compactness]
+\leavevmode
+\begin{enumerate}
+\item For all $t \in [T]$, all $x_{t-1} \in \mathcal{X}_{t-1}$, and almost all $\xi_t \in \Xi_t$, the set $\mathcal{X}_t(x_{t-1},\xi_t)$ is a nonempty compact subset of $\mathbb{R}^{n_t}$ (relatively complete recourse).
+\item The set $\mathcal{X}_t$ is bounded for all $t \in [T]$.
+\end{enumerate}
+\end{assumption}
+
+\begin{remark}
+Note that the linearity assumption (see Assumption~6) immediately implies that 
+Assumption~9(a) is satisfied not only for all $x_{t-1} \in \mathcal{X}_{t-1}$, but also for all $x_{t-1} \in \operatorname{conv}(\mathcal{X}_{t-1})$, where $\operatorname{conv}(S)$ denotes the convex hull of a set $S$.
+\end{remark}
+
+The set $\mathcal{X}_t \subset \mathbb{R}^{n_t}$ is called a \emph{reachable set} and an \emph{effective feasible region}. It may also sometimes be referred to as the state space, because in our setting $x_t$ also takes the role of a state variable. However, in other cases the larger polyhedral set $X_t$ may be called a state space.
+
+The boundedness of $\mathcal{X}_t$ in Assumption~9(b) is required for some of the convergence results on SDDP presented in Section~4. It follows naturally if $X_t$ is bounded, since $\mathcal{X}_t \subseteq X_t$. Property~(a) is convenient but not necessarily required and we discuss possible ways to relax it in Section~17.
+
+With all the ingredients defined, we can now model the decision problem in a form that can be tackled by SDDP. Based on its properties, in what follows we refer to this problem as a \emph{multistage stochastic linear programming problem} (MSLP). 
+If not specified otherwise, throughout this article, we assume that (MSLP) satisfies Assumptions~1--9. We first discuss two different modeling approaches that are common in the literature.
+
+
+
+\end{document}

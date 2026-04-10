@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Comparison Test}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+\begin{definition}
+    Let $X\subseteq \mathcal{M}$ with $|X|=k$.
+    $S\subseteq N$ is a \textbf{blocking coalition} against $X$ if $|S|\geq\lceil \frac{n}{k}\rceil$ and $\exists y\in\mathcal{M}$ such that $\forall i\in S$, $d(i,y)<D_i(X)$.
+    $X\subseteq \mathcal{N}$ is \textbf{proportional} if there is no blocking coalition against $X$.
+\end{definition}
+
+\end{document}

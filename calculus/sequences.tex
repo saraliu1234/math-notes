@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Sequences}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Monotonic and Bounded Sequence}
+
+\begin{definition}[Monotonic]
+    A sequence is \textit{increasing} when $\forall n\in\mathbb{N}, a_n<a_{n+1}$.
+    Or equivalently, $\forall n,m\in\mathbb{N}, n<m\implies a_n<a_m$.
+
+    A sequence is \textit{decreasing} when $\forall n\in\mathbb{N}, a_n>a_{n+1}$.
+\end{definition}
+
+\begin{definition}[Bounded]
+    Let $\{a_n\}_{n=0}^{\infty}$ be a sequence.
+    The sequence is bounded if there exists $A,B\in\mathbb{R}$ such that
+    \[
+    \forall n\in\mathbb{N},\quad A\leq a_n\leq B
+    \]
+\end{definition}
+
+\begin{definition}[Convergent]
+    Let $\{a_n\}_{n=0}^{\infty}$ be a sequence.
+    The sequence is convergent if there exists $L\in\mathbb{R}$ such that
+    \[
+    \forall\varepsilon >0, \;\exists n\in\mathbb{N}\; \text{s.t.}\;\forall n\in\mathbb{N},\; n\geq n_0\implies|a_n-L|<\varepsilon
+    \]
+\end{definition}
+
+\begin{definition}
+    Let $\{a_n\}_{n=0}^{\infty}$ be a sequence.
+    The sequence is divergent to $\infty$ if 
+    \[
+    \forall M >0, \;\exists n\in\mathbb{N}\; \text{s.t.}\;\forall n\in\mathbb{N},\; n\geq n_0\implies|a_n-L|<\varepsilon
+    \]
+\end{definition}
+
+\begin{theorem}
+    Let $\{a_n\}_{n=0}^{\infty}$ be a sequence.
+    If the sequence is convergence, then it is bounded.
+\end{theorem}
+
+\begin{theorem}[the Monotone Convergence Theorem for Sequence]
+    If a sequence is eventually monotonic and bounded, then it is convergent.
+\end{theorem}
+
+\section{the Big Theorem}
+
+\begin{theorem}
+    \[
+    \ln n << n^a << c^n << n! <<n^n
+    \]
+    where $a>0$, $c>1$.
+\end{theorem}
+
+\begin{lemma}
+    \[
+    \lim_{n\rightarrow\infty} \frac{\ln n}{n^a}=0
+    \]
+\end{lemma}
+
+\begin{proof}
+    \[
+    \lim_{n\rightarrow\infty} \frac{\ln n}{n^a}= \lim_{n\rightarrow\infty} \frac{\frac{1}{n}}{an^{a-1}}= \lim_{n\rightarrow\infty} \frac{1}{an^a}=0
+    \]
+\end{proof}
+
+\begin{lemma}
+    \[
+    \lim_{n\rightarrow\infty} \frac{n^a}{c^n}=0
+    \]
+\end{lemma}
+
+\begin{proof}
+    \[
+    \lim_{n\rightarrow\infty} \frac{n^a}{c^n}= \lim_{n\rightarrow\infty}\frac{an^{a-1}}{\ln c\cdot c^n}=\dots =\lim_{n\rightarrow\infty}\frac{a!}{(\ln c)^a\cdot c^n}=0
+    \]
+\end{proof}
+
+\begin{lemma}
+    \[
+    \lim_{n\rightarrow\infty} \frac{c^n}{n!}=0
+    \]
+\end{lemma}
+
+\begin{proof}
+    For this proof, we will use induction on $n$.
+    Assume the conclusion holds for $n$, then 
+    \[
+    \lim_{n\rightarrow\infty} \frac{c^{n+1}}{{n+1}!} = \lim_{n\rightarrow\infty} \frac{c}{{n+1}}\frac{c^{n}}{{n}!} = \lim_{n\rightarrow\infty} \frac{c}{{n+1}}\cdot\lim_{n\rightarrow\infty} \frac{c^{n}}{{n}!}=0\cdot 0=0
+    \]
+\end{proof}
+
+\begin{proof}[Alternative]
+    Fix $c>1$.
+    Call $p_n=\frac{c^n}{n!}$.
+    Because $p_{n+1}=\frac{c}{n+1}p_n$, then when $n\geq c$, we have $p_{n+1}<p_n$. So the sequnce is eventually decreasing.
+    Also, $\{p_n\}$ is bounded below by 0.
+    By MCT, we know that $\{p_n\}$ is convergent.
+    \[
+    \lim_{n\rightarrow\infty} p_{n+1}=\lim_{n\rightarrow\infty} \frac{c}{{n+1}}\cdot\lim_{n\rightarrow\infty} p_n
+    \]
+    Let $L=\lim_{n\rightarrow\infty} p_{n+1}$, then $L\cdot0=L$. So $L=0$.
+\end{proof}
+
+\begin{lemma}
+    \[
+    \lim_{n\rightarrow\infty} \frac{n!}{n^n}=0
+    \]
+\end{lemma}
+
+\begin{proof}
+    \[
+    0<\frac{n!}{n^n}=\frac{1}{n}\cdot \frac{2}{n}\cdot \frac{3}{n}\dots \frac{n-1}{n}\cdot \frac{n}{n}=\frac{1}{n}\cdot \left(\frac{2}{n}\cdot \frac{3}{n}\dots \frac{n-1}{n}\cdot \frac{n}{n}\right)\leq \frac{1}{n}
+    \]
+    Then because $\lim_{n\rightarrow\infty}0=\lim_{n\rightarrow\infty}1/n=0$, with the squeeze theorem, we know that 
+    \[
+    \lim_{n\rightarrow\infty} \frac{n!}{n^n}=0
+    \]
+\end{proof}
+
+\end{document}

@@ -1,0 +1,30 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\theoremstyle{definition}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}{Example}[definition]
+
+\title{Fourier transform}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{definition}
+A function $f : \mathbb{R}^n\rightarrow \mathbb{R}$ deﬁned on a convex set $X \subset \mathbb{R}^n$ is said to be convex, if the following inequality holds true:
+\[
+f(\lambda x_1 + (1-\lambda) x_2)\leq \lambda f(x_1)+(1-\lambda)f(x_2)
+\]
+for all $x_1,x_2\in X$, and all $\lambda \in [0, 1]$.
+\end{definition}
+
+\end{document}

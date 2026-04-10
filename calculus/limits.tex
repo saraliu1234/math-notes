@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+\title{MAT 137 Notes: Unit 2 Limits}
+\author{Lucy Meichen Liu}
+\date{\today}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cO}{\mathcal{O}}
+
+\begin{document}
+\maketitle
+
+\section{Limits}
+
+\textbf{General Idea:}
+
+IF \(f\) is close to \(a \space (x \neq a)\), THEN \(f(x)\) is close to \(L\).
+\bigskip
+
+\noindent
+\textbf{Formal Definition:}
+\begin{itemize}
+    \item Let \(a, \space L\) be real numbers
+    \item Let \(f\) be a function defined, at least, on an interval centered at \(a\), except maybe at \(a\).
+\end{itemize}
+
+We say that $\lim\limits_{x \to a} f(x) = L$ when \(\forall \epsilon > 0, \, \exists \delta > 0 \text{ s.t. } (\forall x \in \R), \ 0 < |x - a| < \delta \implies |f(x) - L| < \epsilon\)
+\bigskip
+
+\noindent
+\textbf{Exercise: Definitions for other cases (Video 2.5):}
+
+Write rigorous definitions for the following concepts:
+\begin{enumerate}
+    \item $\lim\limits_{x \to a+} f(x) = L$
+    \item $\lim\limits_{x \to a-} f(x) = L$
+    \item $\lim\limits_{x \to a} f(x) = \infty$
+    \item $\lim\limits_{x \to a} f(x) = - \infty$
+\end{enumerate}
+\bigskip
+
+\underline{Answer}:
+\begin{enumerate}
+    \item \(\forall \epsilon > 0, \, \exists \delta > 0 \text{ s.t. } (\forall x \in \R), \ 0 < x - a < \delta \implies |f(x) - L| < \epsilon\)
+    \item \(\forall \epsilon > 0, \, \exists \delta > 0 \text{ s.t. } (\forall x \in \R), \ -\delta < x - a < 0 \implies |f(x) - L| < \epsilon\)
+    \item \(\forall M > 0, \, \exists \delta > 0 \text{ s.t. } (\forall x \in \R), \ 0 < |x - a| < \delta \implies f(x) > M\)
+    \item \(\forall M < 0, \, \exists \delta > 0 \text{ s.t. } (\forall x \in \R), \ 0 < |x - a| < \delta \implies f(x) < M\)
+\end{enumerate}
+
+\section{Limit Laws}
+
+\textbf{Definition:}
+
+Assume $\lim\limits_{x \to a} f(x) = L$ and $\lim\limits_{x \to a} g(x) = M$
+\bigskip
+
+THEN
+\begin{itemize}
+    \item $\lim\limits_{x \to a} [f(x) + g(x)] = L + M$
+    \item $\lim\limits_{x \to a} [f(x)g(x)] = LM$
+    \item $\lim\limits_{x \to a} [\frac{f(x)}{g(x)}] = \frac{L}{M}$
+\end{itemize}
+
+\section{Squeeze Theorem}
+
+\textbf{Definition:}
+
+Let \(a, f \in \R\).
+
+Let \(f, g \text{ and } h\) be functions defined near \(a\), except possibly at \(a\).
+
+IF
+\begin{itemize}
+    \item For \(x \text{ close to } a \text{ but not } a, \ h(x) \leq g(x) \leq f(x)\)
+    \item $\lim\limits_{x \to a} f(x) = L$
+    \item $\lim\limits_{x \to a} h(x) = L$
+\end{itemize}
+
+THEN
+\begin{itemize}
+    \item $\lim\limits_{x \to a} g(x) = L$
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{calculus/pictures/Squeeze Theorem picture.png} 
+    \caption{Picture of g(x) sandwiched between f(x) and h(x) (Video 2.12)}
+    \label{squeeze}
+\end{figure}
+\bigskip
+
+\noindent
+\textbf{Example (Video 2.12):}
+
+Compute $\lim\limits_{x \to 0} x^2\sin\frac{1}{x}$:
+\bigskip
+
+\underline{Correct solution}:
+
+We know
+\begin{itemize}
+    \item \(\text{for every } x \neq 0: \ (-x^2 \leq x^2\sin\frac{1}{x} \leq x^2)\)
+    \item $\lim\limits_{x \to 0} x^2 = 0$ and $\lim\limits_{x \to 0} -x^2 = 0$
+\end{itemize}
+
+By Squeeze Theorem, $\lim\limits_{x \to 0} x^2\sin\frac{1}{x} = 0$
+\bigskip
+
+\underline{Note}:
+
+The limit law cannot be used in this case because $\lim\limits_{x \to 0} \sin\frac{1}{x} = DNE$. To use the limit law of multiplication, the precondition of the \underline{two initial limits must exists} needs to be fulfilled. 
+
+\section{Main Continuity Theorem}
+
+\textbf{Recall:}
+
+A function is continuous at \(c\) when $\lim\limits_{x \to c} f(x) = f(c)$
+\bigskip
+
+\noindent
+\textbf{Definition:}
+
+Any function we can construct with sum, product quotient, and composition of polynomials, root, trigonometric functions, exponentials, logarithms, and absolute value is continuous (on its domain).
+\bigskip
+
+\noindent
+\textbf{Proof:}
+
+\begin{enumerate}
+    \item Prove the "basic" functions are continuous:
+    \begin{itemize}
+        \item $f(x) = c$
+        \item $f(x) = x$
+        \item $f(x) = e^x$
+        \item $f(x) = \ln x$
+        \item $f(x) = \sin x$
+        \item $f(x) = |x|$
+    \end{itemize}
+    \item Prove that sum, product, quotient, and composition of continuous functions is continuous.
+    \begin{itemize}
+        \item Use the limit laws!
+    \end{itemize}
+\end{enumerate}
+\bigskip
+
+\textbf{Example (Video 2.15):} 
+
+Claim: The sum of continuous functions is continuous.
+\bigskip
+
+Pf:
+
+Assume \(f \text{ and } g\) are continuous at \(a\).
+
+This means:
+\begin{itemize}
+    \item $\lim\limits_{x \to a} f(x) = f(a)$
+    \item $\lim\limits_{x \to a} g(x) = g(a)$
+\end{itemize}
+
+Use limit laws for sum:
+\bigskip
+
+$\lim\limits_{x \to a} [f(x) + g(x)] = f(a) + g(a)$
+\bigskip
+
+Thus, \(f + g\) is continuous at a.
+\bigskip
+
+\noindent
+\textbf{Challenge (Video 2.15):}
+
+Construct a function \(f\) such that $\lim\limits_{x \to a} f(x) = 0$, but $\lim\limits_{x \to a} f(f(x)) = 1$.
+\bigskip
+
+We can solve this by looking into some properties and theorems of composition.
+\bigskip
+
+\underline{Composition:}
+\begin{itemize}
+    \item Theorem 1:
+        
+        IF \(f\) is continuous at \(a\) and \(g\) is continuous at \(f(a)\)
+        
+        THEN \(g(f) \text{ is continuous at } a\)
+        
+    \item Theorem 2:
+    
+        IF $\lim\limits_{x \to a} f(x) = L$ and $f(x) \neq L$ for \(x\) on interval centered at \(a\), except maybe at \(a\);
+
+        and $\lim\limits_{y \to L} g(y) = M$
+        
+        THEN $\lim\limits_{x \to a} g(f(x)) = M$
+        
+    \item Theorem 3:
+    
+        IF  $\lim\limits_{x \to a} f(x) = L$ and \(g\) is continuous at \(L\)
+        
+        THEN  $\lim\limits_{x \to a} g(f(x)) = g(L)$
+        
+\end{itemize}
+\bigskip
+
+\underline{Example answer:}
+\bigskip
+
+$f(x) = 
+\begin{cases} 
+0 & x \neq 0 \\
+1 & x = 0 
+\end{cases}$
+
+\section{Extreme Value Theorem (EVT)}
+
+\textbf{Maximum:}
+
+We say a function \(f\) has \textbf{maximum} on a set \(I\) when \(\exists c \in I \text{ s.t. } \forall x \in I, \ f(x) \leq f(c)\)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{calculus/pictures/Maximun graph.png} 
+    \caption{Maximum point at x = c (Video 2.21)}
+    \label{max}
+\end{figure}
+
+\bigskip
+
+\noindent
+\textbf{Minimum:}
+
+We say a function \(f\) has \textbf{minimum} on a set \(I\) when \(\exists c \in I \text{ s.t. } \forall x \in I, \ f(x) \geq f(c)\)
+\bigskip
+
+\noindent
+\textbf{Definition:}
+
+\begin{itemize}
+    \item IF \(f\) is a \underline{continuous} function on an interval \([a, \ b]\)
+    \item THEN \(f\) has a maximum and minimum on \([a, \ b]\).
+\end{itemize}
+\bigskip
+
+\noindent
+\textbf{Functions with no max:}
+\begin{enumerate}
+    \item Open Interval
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{calculus/pictures/Open Interval example.png} 
+        \caption{No max because of missing endpoint (Video 2.21)}
+        \label{open}
+    \end{figure}
+    
+    \item Asymptote
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{calculus/pictures/Asymptote example.png} 
+        \caption{No max because of function not bounded (Video 2.21)}
+        \label{tan}
+    \end{figure}
+    
+\end{enumerate}
+$\Rightarrow$ Lack of maximum is related to the \underline{missing end point(s)}.
+\bigskip
+
+\noindent
+\textbf{Challenge (Video 2.21):}
+
+Construct a function \(f\) such that:
+\begin{itemize}
+    \item \(f\) is continuous on \((0, 1]\)
+    \item \(f\) does not have a maximum on \((0, 1]\)
+    \item \(f\) does not have a minimum on \((0, 1]\)
+\end{itemize}
+
+\bigskip
+\underline{Example answer}:
+
+\(f = tan(\pi x - \frac{\pi}{2})\) $\Rightarrow$ Asymptote case
+\bigskip
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{calculus/pictures/EVT Challenge Answer.png} 
+    \caption{Using asymptote properties}
+    \label{EVT}
+\end{figure}
+
+\section{Intermediate Value Theorem (IVT)}
+
+\textbf{Definition:}
+
+Let \(f\) be a function defined on \([a, \ b]\).
+
+Let \(M \in \R\)
+
+IF
+\begin{itemize}
+    \item \(f(a) < M < f(b)\)
+    \item \(f\) is continuous on \([a, \ b]\)
+\end{itemize}
+
+THEN
+\begin{itemize}
+    \item \(\exists c \in [a, \ b] \text{ s.t } f(c) = M\)
+\end{itemize}
+\bigskip
+
+\end{document}

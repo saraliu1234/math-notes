@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Mean Value Theorem}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{theorem}[Fermat's Theorem]
+    Let $f$ be defined on $(a,b)$ and let $c\in(a,b)$ be such that $f(c)\geq f(x)$ for all $x\in(a,b)$. Then either $f^{'}(c)=0$ or $f^{'}(c)$ does not exist.
+\end{theorem}
+
+\begin{theorem}[Rolle's Theorem]
+    Let $f$ be continuous on $[a,b]$ and differentiable on $(a,b)$, with $f(a)=f(b)$. Then there exists $c\in(a,b)$ such that $f^{'}(c)=0$.
+\end{theorem}
+
+\begin{proof}
+    If $f$ is constant on $[a,b]$, then its derivative is zero and so any $c\in(a,b)$ satisfies the conclusion of the theorem.
+    So we assume that $f$ is not constant on $[a,b]$.
+    By the Extreme Value Theorem, $f$ attains an absolute maximum and an absolute minimum on $[a,b]$.
+    Since $f$ is not constant, at least one of these absolute extrema must occur at $c\in(a,b)$.
+    Then by Fermat's Theorem, we know that $f^{'}(c)=0$.
+\end{proof}
+
+\begin{theorem}[Cauchy's Mean Value Theorem]
+    Let $f$ and $g$ be continuous on $[a,b]$ and differentiable on $(a,b)$. Then there exists $c\in(a,b)$ such that 
+    \[
+    f^{'}(c)[g(b)-g(a)]=g^{'}(c)[f(b)-f(a)]
+    \]
+\end{theorem}
+
+\begin{proof}
+    If $g(a)=g(b)$, then by Rolle's Theorem, the result holds.
+    We assume that $g(a)\neq g(b)$.
+    We consider the function
+    \[
+    h(x)=f(x)-\frac{f(b)-f(a)}{g(b)-g(a)}g(x).
+    \]
+    Then $h$ is continuous on $[a,b]$ and differentiable on $(a,b)$.
+    And $h(a)=h(b)$.
+    By Rolle's Theorem, there is $c\in(a,b)$ such that $h^{'}(c)=0$.
+    Finally, $h^{'}(c)=0$ gives $f^{'}(c)[g(b)-g(a)]=g^{'}(c)[f(b)-f(a)]$.
+\end{proof}
+
+\end{document}

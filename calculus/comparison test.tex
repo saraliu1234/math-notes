@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Comparison Test}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Improper Integral}
+\subsection{$p$-Test}
+\subsection{Basic Comparison Test}
+\subsection{Limit Comparison Test}
+
+\section{Series}
+\subsection{Integral Test}
+
+\begin{theorem}
+    Let $f$ be a continuous, positive, decreasing function on $[1,\infty)$ and let $a_n=f(n)$.
+    Then the series $\sum_{n=1}^\infty a_n$ is convergent if and only if the improper integral $\int_1^{\infty}f(x)dx$ is convergent.
+\end{theorem}
+
+\subsection{Alternating Series Test}
+
+\begin{theorem}
+    If the alternating series
+    \[
+    \sum_{n=1}^{\infty}(-1)^{b+1}b_n=b_1-b_2+b_3-b_4+\dots \qquad b_n>0
+    \]
+    satisfies
+    \begin{enumerate}
+        \item $b_{n+1}\leq b_n \quad \text{for all }n$
+        \item $\lim_{n\rightarrow \infty}b_n =0$
+    \end{enumerate}
+    then the series is convergent.
+\end{theorem}
+
+\section{Absolute Convergent}
+
+\begin{theorem}
+    If a series is absolutely convergent, then it is convergent.
+\end{theorem}
+
+\subsection{Ratio Test}
+
+\begin{theorem}
+Let $L=\lim_{n\rightarrow \infty}|\frac{a_{n+1}}{a_n}|$.
+    \begin{enumerate}
+        \item If $L<1$, then the series is absolutely convergent
+        \item If $L>1$ (include $\infty$), then the series is divergent
+        \item If $L=1$, then no conclusion can be drawn from the series
+    \end{enumerate}
+\end{theorem}
+
+\end{document}

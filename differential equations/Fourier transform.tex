@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Fourier transform}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+For a function $u(x)$,
+\[
+\widehat{u}(k)
+= \int_{-\infty}^{\infty} u(x)e^{-ikx}\,dx
+\]
+
+Inverse transform:
+\[
+u(x)
+= \frac{1}{2\pi}
+\int_{-\infty}^{\infty}
+\widehat{u}(k)e^{ikx}\,dk
+\]
+
+\end{document}

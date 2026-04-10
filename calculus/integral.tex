@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Integral and the Fundamental Theorem of Calculus}
+\author{Sara}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Upper Bound}
+
+\begin{definition}[Upper Bound]
+    Let $A\subseteq \mathbb{R}$ be a subset of $\mathbb{R}$. If $c$ is an upper bound of $A$, we know that $\forall x\in A,\;x\leq c$.
+    Furthermore, the least upper bound, or the supremum of $A$ mean:
+    \begin{itemize}
+        \item $c$ is an upper bound of $A$
+        \item for any upper bound $b$, we have $b\geq c$
+    \end{itemize}
+    $c$ is call the maximum of $A$ if $c$ is an element of $A$.
+\end{definition}
+
+\begin{proposition}[Least Upper Bound Principle]
+    Let $A\subseteq \mathbb{R}$ be a subset of $\mathbb{R}$.
+    If $A$ is bounded above and is not empty, then $A$ has a least upper bound.
+\end{proposition}
+
+\section{Supremum and Infimum on a Function}
+
+\begin{definition}
+    $\sup_{x\in I}f(x)$
+\end{definition}
+
+\begin{theorem}
+    Let $f$ be a function defined on the domain $I\neq \emptyset$. If $f$ is bounded above on $I$, then $f$ has a supremum on $I$.
+
+    Similarly, if $f$ is bounded below on $I$, then $f$ has a infimum on $I$.
+\end{theorem}
+
+\section{Integral}
+
+\begin{definition}[Partition]
+    A partition of the interval $[a,b]$ is a finite subset $P\subseteq[a,b]$ that satisfies $a,b\in P$.
+\end{definition}
+
+\begin{definition}
+    Let $f$ be a bounded function on $[a,b]$.
+    Let $P=\{x_0,x_1,\dots, x_N\}$ be a partition on $[a,b]$.
+    For each $i=1,\dots ,N$, let $m_i$ be the infimum of $f$ at $[x_{i-1},x_i]$, $M_i$ be the supremum of $f$ at $[x_{i-1},x_i]$.
+    Write $\Delta x_i=x_i-x_{i-1}$.
+    Then the P-lower sum is \[
+    L_p=\Sigma_{i=1}^N m_i\cdot\Delta x_i
+    \]
+    P-upper sum is \[
+    U_p=\Sigma_{i=1}^N M_i\cdot\Delta x_i
+    \]
+\end{definition}
+
+\section{Fundamental Theorem of Calculus}
+
+\end{document}

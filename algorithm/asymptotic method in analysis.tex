@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\title{Integral and the Fundamental Theorem of Calculus}
+\author{Sarah Liu}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Basics}
+\subsection{Asymptotic Equivalence}
+\[
+x+1\sim x
+\]
+\[
+\sinh x \sim \frac{1}{2}e^x
+\]
+\[
+n!\sim e^{-n}n^n\sqrt{2\pi n}
+\]
+\begin{theorem}[Prime Number Theorem]
+    Denote $\pi(x)$ as the number of prime number less than or equal to $\pi$.
+    \[
+    \pi(x)\sim\frac{x}{\ln x}
+    \]
+\end{theorem}
+
+
+\end{document}
